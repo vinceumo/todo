@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ToDo list</title>
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- production version, optimized for size and speed -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="dist/css/screen.css">
+</head>
+
+<body>
+    <button class="menu">Menu</button>
+    <div class="page-container">
+        <nav>
+            <ul>
+                <li>
+                    <button class="is-active">✍️ list 1 <span>3</span></button>
+                </li>
+                <li>
+                    <button>🏈 list 2 <span>3</span></button>
+                </li>
+                <li>
+                    <button>🥞 list 3 <span>3</span></button>
+                </li>
+                <li>
+                    <button>✈️ list 4 <span>3</span></button>
+                </li>
+                <li>
+                    <button class="is-add">Create a new list</button>
+                </li>
+            </ul>
+        </nav>
+        <section>
+            <header style="background-image: url(https://source.unsplash.com/random)">
+                <div class="header-content">
+                    <h1>✍️ list 1</h1>
+                    <button class="is-danger">Delete list</button>
+                </div>
+            </header>
+            <ul>
+                <li>
+                    <label for="el1">
+                        <input type="checkbox" name="el1" id="el1">Todo item 1</label>
+                    <button class="is-danger">Delete item</button>
+                </li>
+                <li>
+                    <label for="el2">
+                        <input type="checkbox" name="el2" id="el2">Todo item 2</label>
+                    <button class="is-danger">Delete item</button>
+                </li>
+                <li>
+                    <label for="el3">
+                        <input type="checkbox" name="el3" id="el3">Todo item 3</label>
+                    <button class="is-danger">Delete item</button>
+                </li>
+                <li>
+                    <label for="el4">
+                        <input type="checkbox" name="el4" id="el4">Todo item 4</label>
+                    <button class="is-danger">Delete item</button>
+                </li>
+                <li>
+                    <label for="el5">
+                        <input type="checkbox" name="el5" id="el5">Todo item 5</label>
+                    <button class="is-danger">Delete item</button>
+                </li>
+                <li>
+                    <button class="is-add">New Todo</button>
+                </li>
+            </ul>
+        </section>
+    </div>
+</body>
+
+</html>
