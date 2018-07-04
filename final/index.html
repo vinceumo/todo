@@ -18,28 +18,16 @@
 
 <body>
     <div id="app">
-        <button class="menu">Menu</button>
+        <button v-on:click="isNavOpen = !isNavOpen" class="menu">Menu</button>
         <div class="page-container">
-            <nav>
+            <nav v-bind:class="{'is-open': isNavOpen}">
                 <ul>
-                    <li>
-                        <button class="is-active">✍️ list 1
-                            <span>3</span>
-                        </button>
-                    </li>
-                    <li>
-                        <button>🏈 list 2
-                            <span>3</span>
-                        </button>
-                    </li>
-                    <li>
-                        <button>🥞 list 3
-                            <span>3</span>
-                        </button>
-                    </li>
-                    <li>
-                        <button>✈️ list 4
-                            <span>3</span>
+                    <li v-for="todoList in todoLists">
+                        <button>
+                            {{todoList.title}}
+                            <span>
+                                {{todoList.items.length}}
+                            </span>
                         </button>
                     </li>
                     <li>
@@ -47,45 +35,31 @@
                     </li>
                 </ul>
             </nav>
-            <section>
-                <header style="background-image: url(https://source.unsplash.com/random)">
+            <main>
+                <header v-bind:style="'background-image: url(https://source.unsplash.com/featured/?' + todoLists[currentListIndex].keyword + ')'">
                     <div class="header-content">
-                        <h1>✍️ list 1</h1>
+                        <h1>{{todoLists[currentListIndex].title}}</h1>
                         <button class="is-danger">Delete list</button>
                     </div>
                 </header>
                 <ul>
-                    <li>
-                        <label for="el1">
-                            <input type="checkbox" name="el1" id="el1">Todo item 1</label>
-                        <button class="is-danger">Delete item</button>
-                    </li>
-                    <li>
-                        <label for="el2">
-                            <input type="checkbox" name="el2" id="el2">Todo item 2</label>
-                        <button class="is-danger">Delete item</button>
-                    </li>
-                    <li>
-                        <label for="el3">
-                            <input type="checkbox" name="el3" id="el3">Todo item 3</label>
-                        <button class="is-danger">Delete item</button>
-                    </li>
-                    <li>
-                        <label for="el4">
-                            <input type="checkbox" name="el4" id="el4">Todo item 4</label>
-                        <button class="is-danger">Delete item</button>
-                    </li>
-                    <li>
-                        <label for="el5">
-                            <input type="checkbox" name="el5" id="el5">Todo item 5</label>
+                    <li v-for="(todo, index) in todoLists[currentListIndex].items">
+                        <label v-bind:for="'todo' + index">
+                            <input
+                            type="checkbox"
+                            v-bind:name="'todo' + index"
+                            v-bind:id="'todo' + index"
+                            v-bind:checked="todo.isCompleted"
+                            v-model="todo.isCompleted">{{todo.name}}</label>
                         <button class="is-danger">Delete item</button>
                     </li>
                     <li>
                         <button class="is-add">New Todo</button>
                     </li>
                 </ul>
-            </section>
+            </main>
         </div>
     </div>
 </body>
+
 </html>

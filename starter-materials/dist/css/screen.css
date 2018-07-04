@@ -151,7 +151,7 @@ nav ul li:last-child button {
   width: auto;
 }
 
-section {
+main {
   height: calc(100vh - 3rem);
   background-color: #f7f7f7;
   padding-bottom: 3rem;
@@ -159,13 +159,13 @@ section {
   overflow-y: auto;
 }
 
-section > ul {
+main > ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-section > ul > li {
+main > ul > li {
   padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
@@ -173,20 +173,20 @@ section > ul > li {
   border-bottom: 1px solid #dedede;
 }
 
-section > ul > li label {
+main > ul > li label {
   cursor: pointer;
 }
 
-section > ul > li label input {
+main > ul > li label input {
   margin-right: 1rem;
   width: 1rem;
 }
 
-section > ul > li:last-child button {
+main > ul > li:last-child button {
   padding-left: 0;
 }
 
-section > ul > li:last-child button:before {
+main > ul > li:last-child button:before {
   margin-right: 1rem;
 }
 
