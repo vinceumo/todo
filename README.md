@@ -169,11 +169,17 @@ As we are going to bind our keyword inside an attribute we are going to use `v-b
 
 ### Todos
 
-To render our todos in the main section we are going to use `v-for`.
+To render our todos in the main section we are going to use `v-for`. As we want an individual ID and names for each inputs we are going to pass the index in our for loop `v-for="(value, index) in object"`.
+
+We are going to use `v-bind` to checked our todos if these ones are already checked.
+
+We are using `v-model` to update the value of `isCompleted` from our todos when we click on the checkbox. When our checkbox is is checked isCompleted will get the value of true and the parent li will automatically get the class `is-completed` as isCompleted is `true`.
+
+The `v-model` directive creates a two way data bindings meaning when the value get updated the UI will be updated as well.
 
 ```html
 <ul>
-  <li v-for="(todo, index) in todoLists[currentListIndex].items">
+  <li v-for="(todo, index) in todoLists[currentListIndex].items" v-bind:class="{'is-completed': todo.isCompleted}">
     <label v-bind:for="'todo' + index">
       <input
       type="checkbox"
@@ -194,3 +200,21 @@ To render our todos in the main section we are going to use `v-for`.
 ### Documentation references
 * [Form Input Bindings - Checkbox](https://vuejs.org/v2/guide/forms.html#Checkbox)
 * [v-model](https://vuejs.org/v2/api/#v-model)
+
+
+## Change current list
+
+We want to be able to change the current list being displayed. The current list being displayed is set by `currentListIndex` in our app's data. When we click on one of our list items we want to change `currentListIndex` to the index of this one and close the side navigation if open.
+
+```html
+<li v-for="(todoList, index) in todoLists">
+    <button v-on:click="currentListIndex = index; isNavOpen = false">
+        {{todoList.title}}
+        <span>
+            {{todoList.items.length}}
+        </span>
+    </button>
+</li>
+```
+
+## Create a new list

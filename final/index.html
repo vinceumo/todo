@@ -22,8 +22,8 @@
         <div class="page-container">
             <nav v-bind:class="{'is-open': isNavOpen}">
                 <ul>
-                    <li v-for="todoList in todoLists">
-                        <button>
+                    <li v-for="(todoList, index) in todoLists">
+                        <button v-on:click="currentListIndex = index; isNavOpen = false">
                             {{todoList.title}}
                             <span>
                                 {{todoList.items.length}}
@@ -31,7 +31,7 @@
                         </button>
                     </li>
                     <li>
-                        <button class="is-add">Create a new list</button>
+                        <button class="is-add" v-on:click="openSidebar">Create a new list</button>
                     </li>
                 </ul>
             </nav>
@@ -43,14 +43,9 @@
                     </div>
                 </header>
                 <ul>
-                    <li v-for="(todo, index) in todoLists[currentListIndex].items">
+                    <li v-for="(todo, index) in todoLists[currentListIndex].items" v-bind:class="{'is-completed': todo.isCompleted}">
                         <label v-bind:for="'todo' + index">
-                            <input
-                            type="checkbox"
-                            v-bind:name="'todo' + index"
-                            v-bind:id="'todo' + index"
-                            v-bind:checked="todo.isCompleted"
-                            v-model="todo.isCompleted">{{todo.name}}</label>
+                            <input type="checkbox" v-bind:name="'todo' + index" v-bind:id="'todo' + index" v-bind:checked="todo.isCompleted" v-model="todo.isCompleted">{{todo.name}}</label>
                         <button class="is-danger">Delete item</button>
                     </li>
                     <li>
@@ -58,6 +53,21 @@
                     </li>
                 </ul>
             </main>
+        </div>
+        <div class="sidebar" v-bind:class="{'is-open' : isSidebarOpen}">
+            <div class="sidebar-content">
+                <form>
+                    <h3>Create a new list</h3>
+                    <label for="listTitle">Title:</label>
+                    <input id="listTitle" name="listTitle" type="text" placeholder="My amazing next trip to south america" v-model="tempNewList.title">
+                    <label for="listKeyword">Keyword:</label>
+                    <input id="listKeyword" name="listKeyword" type="text" placeholder="Colombia" v-model="tempNewList.keyword">
+                    <div class="buttons">
+                        <button type="button" class="is-danger" v-on:click="isSidebarOpen = false">Cancel</button>
+                        <button type="button" class="is-confirm" v-on:click="addNewList">Create List</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>

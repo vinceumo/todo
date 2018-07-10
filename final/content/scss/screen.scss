@@ -5,12 +5,14 @@ $black: #000;
 $grey: #f7f7f7;
 $blue: #77c4d3;
 $red: #ea2e49;
+$green: #34D980;
 
 $desktop-bp: 850px;
 
 body {
   background-color: $white;
   font-family: Arial, Helvetica, sans-serif;
+  position: relative;
 }
 
 button {
@@ -19,8 +21,7 @@ button {
   padding: 0.5rem 1rem;
   cursor: pointer;
 
-  &.is-danger {
-    color: $red;
+  &.is-danger, &.is-confirm {
     position: relative;
     padding-left: 0;
     padding-right: 0;
@@ -29,7 +30,6 @@ button {
       content: "";
       width: 0;
       height: 2px;
-      background-color: $red;
       position: absolute;
       bottom: 0;
       left: 0;
@@ -41,6 +41,20 @@ button {
       &:after {
         width: 100%;
       }
+    }
+  }
+
+  &.is-danger {
+    color: $red;
+    &:after {
+      background-color: $red;
+    }
+  }
+
+  &.is-confirm {
+    color: $green;
+    &:after {
+      background-color: $green;
     }
   }
 
@@ -165,6 +179,33 @@ nav {
   }
 }
 
+.sidebar {
+  height: calc(100vh - 4rem);
+  width: calc(100vw - 4rem);
+  padding: 2rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: $white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  transform: translate3d(100%, 0, 0);
+  transition: transform 0.4s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.is-open {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .sidebar-content {
+    min-width: 300px;
+    max-width: 600px;
+  }
+}
+
 main {
   height: calc(100vh - 3rem);
   background-color: $grey;
@@ -184,8 +225,30 @@ main {
       align-items: center;
       border-bottom: 1px solid darken($grey, 10%);
 
+      &.is-completed {
+        label {
+          opacity: 0.5;
+
+          &:after {
+            width: 100%;
+          }
+        }
+      }
+
       label {
         cursor: pointer;
+        position: relative;
+
+        &:after {
+          content: '';
+          height: 1px;
+          width: 0;
+          background-color: $black;
+          position: absolute;
+          top: 50%;
+          left: 0;
+        }
+
         input {
           margin-right: 1rem;
           width: 1rem;
@@ -224,5 +287,23 @@ header {
   .header-content {
     position: relative;
     z-index: 1;
+  }
+}
+
+form {
+  label {
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  input[type="text"] {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .buttons {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
   }
 }
