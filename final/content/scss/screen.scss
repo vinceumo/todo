@@ -21,7 +21,7 @@ button {
   padding: 0.5rem 1rem;
   cursor: pointer;
 
-  &.is-danger, &.is-confirm {
+  &.is-danger, &.is-confirm,  &.is-primary {
     position: relative;
     padding-left: 0;
     padding-right: 0;
@@ -55,6 +55,13 @@ button {
     color: $green;
     &:after {
       background-color: $green;
+    }
+  }
+
+  &.is-primary {
+    color: $blue;
+    &:after {
+      background-color: $blue;
     }
   }
 

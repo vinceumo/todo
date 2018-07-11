@@ -6,7 +6,7 @@ Clone the project
 
 Copy `starter-materials` folder on your machine
 
-## I - Toggle navigation on mobile
+## Toggle navigation on mobile
 
 We are going to show and hide the side navigation on mobile.
 
@@ -25,7 +25,9 @@ In `index.html`, we are going to dynamically pass `.is-open` using `v-bind:class
 
 In `content/js/app.js`, we are going to had `isNavOpen` to our data. If you change our data to **true** the nav will show up.
 
-By default we want the nav to be close so we are going to set `isNavOpen: false`.
+The **data** property in vue.js is where we store the data of our application but as well the state of our UI. For example if _isNavOpen_ is by default set to false but by changing its value to true we can bind the class _is-open_ to the DOM.
+
+We are going to add `isNavOpen: false` to our app.js.
 
 ```javascript
 //content/js/app.js
@@ -198,9 +200,9 @@ The `v-model` directive creates a two way data bindings meaning when the value g
 ```
 
 ### Documentation references
-* [Form Input Bindings - Checkbox](https://vuejs.org/v2/guide/forms.html#Checkbox)
-* [v-model](https://vuejs.org/v2/api/#v-model)
 
+- [Form Input Bindings - Checkbox](https://vuejs.org/v2/guide/forms.html#Checkbox)
+- [v-model](https://vuejs.org/v2/api/#v-model)
 
 ## Change current list
 
@@ -218,3 +220,258 @@ We want to be able to change the current list being displayed. The current list 
 ```
 
 ## Create a new list
+
+### Toggle the sidebar
+
+When clicking on **Create a new list** we want to show the `.sidebar`. To do so we want to add the class `.is-open` to this one and close the nav bar if this one is open on mobile. The way to do this is quite similar to what we have done with the navigation on mobile.
+
+In our data we are going to add a new entry of `isSidebarOpen: false`:
+
+```js
+var app = new Vue({
+  el: "#app",
+  data: {
+    isNavOpen: false,
+    isSidebarOpen: false,
+    currentListIndex: 0
+    //...
+  }
+});
+```
+
+Now we want to bind our class `.is-open` to our `.sidebar`:
+
+```html
+<div class="sidebar" v-bind:class="{'is-open' : isSidebarOpen}">
+ <!-- ... -->
+</div>
+```
+
+Last but not least, we need to add on event handler on click on **Create a new list** that will open the sidebar and close the navigation on mobile:
+
+```html
+<button class="is-add" v-on:click="isSidebarOpen = true; isNavOpen = false;">Create a new list</button>
+```
+
+Nice, now we can open our sidebar.
+
+Now lets close the sidebar when we click on **cancel**:
+
+```html
+<button type="button" class="is-danger" v-on:click="isSidebarOpen = false">Cancel</button>
+```
+
+### Add the new list
+
+To create a new list we want to field the _title_ and _keyword_ inputs. When the user click on **Create List** we want to push our new values to `todoLists` in our data. If one of our input is empty we want a default text to show up.
+
+In our _app.js_ we are going to add a `tempNewList` array, it will store the values of our inputs.
+
+```js
+var app = new Vue({
+  el: "#app",
+  data: {
+    isNavOpen: false,
+    isSidebarOpen: false,
+    currentListIndex: 0,
+    tempNewList: [
+      {
+        title: null,
+        keyword: null
+      }
+    ]
+    //...
+  }
+});
+```
+
+Now we are going to bind our inputs using `v-model`.
+
+```html
+<form>
+  <h3>Create a new list</h3>
+  <label for="listTitle">Title:</label>
+  <input id="listTitle" name="listTitle" type="text" placeholder="My amazing next trip to south america" v-model="tempNewList.title">
+  <label for="listKeyword">Keyword:</label>
+  <input id="listKeyword" name="listKeyword" type="text" placeholder="Colombia" v-model="tempNewList.keyword">
+  <div class="buttons">
+      <button type="button" class="is-danger" v-on:click="isSidebarOpen = false">Cancel</button>
+      <button type="button" class="is-confirm">Create List</button>
+  </div>
+</form>
+```
+
+Alright, now lets push our new `tempNewList` values to `todoLists`.
+
+We are going to create a **method** called `addNewList`. A **method** is a function stored as an object property. Here the object is the vue instance. In vue our method will be stored in a a `methods` object.
+
+Our `addNewList` method will follow this scenario:
+
+1.  If _title_ is empty use a default string of `"🕵️‍ List with no name"`
+1.  If _keyword_ is empty use a default string of `""earth"`
+1.  Push our values to `todoLists`
+1.  Change our current list to our new list
+1.  Close the sidebar
+1.  Reset the values of our inputs
+
+```js
+var app = new Vue({
+  el: "#app",
+  data: {
+    //...
+  },
+  methods: {
+    addNewList: function() {
+      var listTitle = this.tempNewList.title;
+      var listKeyword = this.tempNewList.keyword;
+      if (listTitle == null) {
+        listTitle = "🕵️‍ List with no name";
+      }
+      if (listKeyword == null) {
+        listKeyword = "earth";
+      }
+      this.todoLists.push({
+        title: listTitle,
+        keyword: listKeyword,
+        items: []
+      });
+      this.currentListIndex = this.todoLists.length - 1;
+      this.isSidebarOpen = false;
+      this.tempNewList.title = null;
+      this.tempNewList.keyword = null;
+    }
+  }
+});
+```
+
+Finally we are going to bind our method to our **Create list** button.
+
+```html
+<button type="button" class="is-confirm" v-on:click="addNewList">Create List</button>
+```
+
+### Documentation references
+
+- [Method Event Handlers](https://vuejs.org/v2/guide/events.html#Method-Event-Handlers)
+
+## Edit a list
+
+Good, now that we can create a new list we want to be able to edit existing ones. For now we want to be able to change the title, the keyword and delete a list.
+
+### Toggle sidebar content
+
+First we are going to create a new method `openSidebar`. This one will:
+
+1.  Open the sidebar
+2.  Show the form that we want to use
+3.  close the navigation if this one is open
+
+In data lets add `sidebarContentToShow: null`, This will allow us to know what form should be shown.
+
+```js
+var app = new Vue({
+  el: "#app",
+  data: {
+    isNavOpen: false,
+    isSidebarOpen: false,
+    sidebarContentToShow: null,
+    currentListIndex: 0
+    //...
+  },
+  methods: {
+    //...
+  }
+});
+```
+
+We are going to have 4 forms in our sidebar that we will toggle:
+
+1.  `"createNewList"`
+1.  `"editList"`
+1.  `"createNewTodo"`
+1.  `"editTodo"`
+
+In our html we will conditionally render our forms depending on the value of `sidebarContentToShow`. To do so we are using the `v-if` directive that will allow us to render our block if a condition in true. We need to uncomment our forms and add a `v-if` directive.
+
+```html
+<div class="sidebar" v-bind:class="{'is-open' : isSidebarOpen}">
+  <div class="sidebar-content">
+      <form v-if="sidebarContentToShow === 'createNewList'">
+          <h3>Create a new list</h3>
+          <!-- ... -->
+      </form>
+      <form v-if="sidebarContentToShow === 'editList'">
+        <h3>Edit list</h3>
+          <!-- ... -->
+      </form>
+      <form v-if="sidebarContentToShow === 'createNewTodo'">
+        <h3>Create a new todo</h3>
+          <!-- ... -->
+      </form>
+      <form v-if="sidebarContentToShow === 'editTodo'">
+        <h3>Edit todo</h3>
+          <!-- ... -->
+      </form>
+  </div>
+</div>
+```
+
+Now when we click on the **Create a new list** the sidebar appear and we see... Nothing 😱. That normal remember, `sidebarContentToShow` is set to null 😉.
+
+To change the value of `sidebarContentToShow` we are going to create a `openSidebar` method that will open the sidebar and change the form that we want to show.
+
+```js
+var app = new Vue({
+  el: "#app",
+  data: {
+    //...
+  },
+  methods: {
+    openSidebar: function(contentToShow) {
+      this.isSidebarOpen = true;
+      this.isNavOpen = false;
+      this.sidebarContentToShow = contentToShow;
+    },
+    //...
+  }
+});
+```
+
+Now we can change **Create a new list** so we can use `openSidebar`
+
+```html
+<button class="is-add" v-on:click="openSidebar('createNewList')">Create a new list</button>
+```
+
+And ta-dah we are now rendering the create a new list form. As you may have already guest we are going to reuse our method with the **Edit list** button.
+
+```html
+<button class="is-primary" v-on:click="openSidebar('editList')">Edit list</button>
+```
+
+### Edit list form
+
+We are going to start with the **delete list** button. We are going to create a new method, `deleteList`. It will remove the current shown list and show the first one.
+
+```js
+//...
+deleteList: function() {
+  this.todoLists.splice(this.currentListIndex, 1);
+  this.currentListIndex = 0;
+  this.isSidebarOpen = false;
+}
+//...
+```
+
+```html
+<button type="button" class="is-danger" v-on:click="deleteList">Delete list</button>
+```
+
+### Documentation references
+
+- [Conditional Rendering](https://vuejs.org/v2/guide/conditional.html)
+- [v-if](https://vuejs.org/v2/api/#v-if)
+
+## Create a new todo
+
+## Edit a todo

@@ -1,16 +1,17 @@
 document.addEventListener(
   "DOMContentLoaded",
-  function () {
+  function() {
     var app = new Vue({
       el: "#app",
       data: {
         isNavOpen: false,
         isSidebarOpen: false,
+        sidebarContentToShow: null,
         currentListIndex: 0,
         tempNewList: [
           {
             title: null,
-            keyword: null,
+            keyword: null
           }
         ],
         todoLists: [
@@ -38,34 +39,40 @@ document.addEventListener(
               { name: "Apples", isCompleted: false },
               { name: "Bananas", isCompleted: true },
               { name: "Tomatoes", isCompleted: false },
-              { name: "Bread", isCompleted: true },
+              { name: "Bread", isCompleted: true }
             ]
-          },
+          }
         ]
       },
       methods: {
-        openSidebar: function () {
+        openSidebar: function(contentToShow) {
           this.isSidebarOpen = true;
           this.isNavOpen = false;
+          this.sidebarContentToShow = contentToShow;
         },
-        addNewList: function () {
-          if (this.tempNewList.title == null) {
-            this.tempNewList.title = "🕵️‍ List with no name"
-          };
-          if (this.tempNewList.keyword == null) {
-            this.tempNewList.keyword = "mars"
-          };
-          this.todoLists.push(
-            {
-              title: this.tempNewList.title,
-              keyword: this.tempNewList.keyword,
-              items: [],
-            }
-          );
+        addNewList: function() {
+          var listTitle = this.tempNewList.title;
+          var listKeyword = this.tempNewList.keyword;
+          if (listTitle == null) {
+            listTitle = "🕵️‍ List with no name";
+          }
+          if (listKeyword == null) {
+            listKeyword = "earth";
+          }
+          this.todoLists.push({
+            title: listTitle,
+            keyword: listKeyword,
+            items: []
+          });
           this.currentListIndex = this.todoLists.length - 1;
           this.isSidebarOpen = false;
           this.tempNewList.title = null;
           this.tempNewList.keyword = null;
+        },
+        deleteList: function() {
+          this.todoLists.splice(this.currentListIndex, 1);
+          this.currentListIndex = 0;
+          this.isSidebarOpen = false;
         }
       }
     });

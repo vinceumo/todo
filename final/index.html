@@ -18,7 +18,6 @@
 
 <body>
     <div id="app">
-        <button v-on:click="isNavOpen = !isNavOpen" class="menu">Menu</button>
         <div class="page-container">
             <nav v-bind:class="{'is-open': isNavOpen}">
                 <ul>
@@ -31,7 +30,7 @@
                         </button>
                     </li>
                     <li>
-                        <button class="is-add" v-on:click="openSidebar">Create a new list</button>
+                        <button class="is-add" v-on:click="openSidebar('createNewList')">Create a new list</button>
                     </li>
                 </ul>
             </nav>
@@ -39,7 +38,7 @@
                 <header v-bind:style="'background-image: url(https://source.unsplash.com/featured/?' + todoLists[currentListIndex].keyword + ')'">
                     <div class="header-content">
                         <h1>{{todoLists[currentListIndex].title}}</h1>
-                        <button class="is-danger">Delete list</button>
+                        <button class="is-primary" v-on:click="openSidebar('editList')">Edit list</button>
                     </div>
                 </header>
                 <ul>
@@ -56,7 +55,7 @@
         </div>
         <div class="sidebar" v-bind:class="{'is-open' : isSidebarOpen}">
             <div class="sidebar-content">
-                <form>
+                <form v-if="sidebarContentToShow === 'createNewList'">
                     <h3>Create a new list</h3>
                     <label for="listTitle">Title:</label>
                     <input id="listTitle" name="listTitle" type="text" placeholder="My amazing next trip to south america" v-model="tempNewList.title">
@@ -67,8 +66,24 @@
                         <button type="button" class="is-confirm" v-on:click="addNewList">Create List</button>
                     </div>
                 </form>
+                <form v-if="sidebarContentToShow === 'editList'">
+                    <h3>Edit list</h3>
+                    <label for="listTitle">Title:</label>
+                    <input id="listTitle" name="listTitle" type="text" placeholder="My amazing next trip to south america" v-model="todoLists[currentListIndex].title">
+                    <label for="listKeyword">Keyword:</label>
+                    <input id="listKeyword" name="listKeyword" type="text" placeholder="Colombia" v-model="todoLists[currentListIndex].keyword">
+                    <div class="buttons">
+                        <button type="button" class="is-danger" v-on:click="deleteList">Delete list</button>
+                        <button type="button" class="is-confirm" v-on:click="isSidebarOpen = false">Done</button>
+                    </div>
+                </form>
+                <form v-if="sidebarContentToShow === 'createNewTodo'">
+                </form>
+                <form v-if="sidebarContentToShow === 'editTodo'">
+                </form>
             </div>
         </div>
+        <button v-on:click="isNavOpen = !isNavOpen" class="menu">Menu</button>
     </div>
 </body>
 
