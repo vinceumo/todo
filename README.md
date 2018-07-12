@@ -1,10 +1,56 @@
-# vue-101-damdigital-workshop
+# Vue 101 todo tutorial
 
-## Introduction
+The goal of this tutorial is to give an introduction to vue.js
 
-Clone the project
+Vue.js is a progressive framework for building user interfaces.
 
-Copy `starter-materials` folder on your machine
+This tutorial assumes that you already have some intermediate knowledge about HTML, CSS and Javascript. If you don't have any knowledge on these fields check out [freeCodeCamp](https://www.freecodecamp.org/), they have great resources to learn these topics 😉.
+
+Here are the topics this tutorial will cover:
+
+* Class and Style Bindings
+* Event Handling
+* v-bind directive
+* Data binding in attributes
+* List Rendering
+* Interpolations - Mustache
+* Form Input Bindings - Checkbox
+* v-model
+* Methods
+* Conditional Rendering
+* v-if
+* v-else
+
+## Table of Contents
+- [Getting started](#Getting-started)
+- [Toggle navigation on mobile](#toggle-navigation-on-mobile)
+  * [Documentation references](#documentation-references)
+- [Bind our todo lists to the side navigation](#bind-our-todo-lists-to-the-side-navigation)
+  * [Documentation references](#documentation-references-1)
+- [Main section](#main-section)
+  * [Header](#header)
+  * [Todos](#todos)
+  * [Documentation references](#documentation-references-2)
+- [Change current list](#change-current-list)
+- [Create a new list](#create-a-new-list)
+  * [Toggle the sidebar](#toggle-the-sidebar)
+  * [Add the new list](#add-the-new-list)
+  * [Documentation references](#documentation-references-3)
+- [Edit a list](#edit-a-list)
+  * [Toggle sidebar content](#toggle-sidebar-content)
+  * [Edit list form](#edit-list-form)
+    + [Delete a list](#delete-a-list)
+    + [Change the title and keyword value](#change-the-title-and-keyword-value)
+  * [Documentation references](#documentation-references-4)
+- [Create and edit a todo](#create-and-edit-a-todo)
+    + [Create a todo](#create-a-todo)
+    + [Edit a todo](#edit-a-todo)
+
+## Getting started
+
+Clone the [starter materials from github](https://github.com/vinceumo/vue-101-damdigital-workshop). It include the base html, css and js.
+
+Vue CDN is already included in our html, as well as 
 
 ## Toggle navigation on mobile
 
@@ -17,7 +63,6 @@ To do so we are going to use `v-bind` in our markup. `v-bind` allow us to bind d
 In `index.html`, we are going to dynamically pass `.is-open` using `v-bind:class`. If `isNavOpen` is true, then we will add our class.
 
 ```html
-<!--index.html -->
 <nav v-bind:class="{'is-open': isNavOpen}">
 <!-- ... -->
 </nav>
@@ -30,7 +75,6 @@ The **data** property in vue.js is where we store the data of our application bu
 We are going to add `isNavOpen: false` to our app.js.
 
 ```javascript
-//content/js/app.js
 var app = new Vue({
   el: "#app",
   data: {
@@ -47,8 +91,6 @@ We are going to use the event handler 'on click'. In vue.js we can use `v-on:`, 
 <button v-on:click="isNavOpen = !isNavOpen" class="menu">Menu</button>
 ```
 
-![Animation showing the navigation panel opening and closing](https://image.ibb.co/j2gUBd/toggle_nav.gif)
-
 ### Documentation references
 
 - [Class and Style Bindings](https://vuejs.org/v2/guide/class-and-style.html)
@@ -61,7 +103,6 @@ We are going to use the event handler 'on click'. In vue.js we can use `v-on:`, 
 In `content/js/app.js`, we are going to add some dummy lists so we can start to integrate our side navigation.
 
 ```javascript
-//content/js/app.js
 var app = new Vue({
   el: "#app",
   data: {
@@ -126,7 +167,7 @@ We are using the 'mustache' syntax `{{}}` to bind our text to the view. The must
 ### Documentation references
 
 - [List Rendering](https://vuejs.org/v2/guide/list.html)
-- [Interpolations Text - Mustache](https://vuejs.org/v2/guide/syntax.html#Text)
+- [Interpolations - Mustache](https://vuejs.org/v2/guide/syntax.html#Text)
 
 ## Main section
 

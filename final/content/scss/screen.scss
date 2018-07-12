@@ -294,6 +294,22 @@ header {
   .header-content {
     position: relative;
     z-index: 1;
+
+    button{
+      background-color: $white;
+      padding: 0.5rem;
+
+      &:after{
+        bottom: 0.25rem;
+        left: 0.5rem;
+      }
+
+      &:hover, &:focus {
+        &:after{
+          width: calc(100% - 1rem);
+        }
+      }
+    }
   }
 }
 
