@@ -34,7 +34,7 @@
                     </li>
                 </ul>
             </nav>
-            <main>
+            <main v-if="todoLists.length > 0">
                 <header v-bind:style="'background-image: url(https://source.unsplash.com/featured/?' + todoLists[currentListIndex].keyword + ')'">
                     <div class="header-content">
                         <h1>{{todoLists[currentListIndex].title}}</h1>
@@ -45,12 +45,20 @@
                     <li v-for="(todo, index) in todoLists[currentListIndex].items" v-bind:class="{'is-completed': todo.isCompleted}">
                         <label v-bind:for="'todo' + index">
                             <input type="checkbox" v-bind:name="'todo' + index" v-bind:id="'todo' + index" v-bind:checked="todo.isCompleted" v-model="todo.isCompleted">{{todo.name}}</label>
-                        <button class="is-danger">Delete item</button>
+                        <button class="is-primary" v-on:click="openSidebar('editTodo'); currentTodoIndex = index">Edit todo</button>
                     </li>
                     <li>
-                        <button class="is-add">New Todo</button>
+                        <button class="is-add" v-on:click="openSidebar('createNewTodo')">New Todo</button>
                     </li>
                 </ul>
+            </main>
+            <main v-else>
+                <header style="background-image: url(https://source.unsplash.com/featured/?cat">
+                    <div class="header-content">
+                        <h1>Please create a new list</h1>
+                        <button class="is-add" v-on:click="openSidebar('createNewList')">Create a new list</button>
+                    </div>
+                </header>
             </main>
         </div>
         <div class="sidebar" v-bind:class="{'is-open' : isSidebarOpen}">
@@ -66,7 +74,7 @@
                         <button type="button" class="is-confirm" v-on:click="addNewList">Create List</button>
                     </div>
                 </form>
-                <form v-if="sidebarContentToShow === 'editList'">
+                <form v-if="sidebarContentToShow === 'editList' && todoLists.length > 0">
                     <h3>Edit list</h3>
                     <label for="listTitle">Title:</label>
                     <input id="listTitle" name="listTitle" type="text" placeholder="My amazing next trip to south america" v-model="todoLists[currentListIndex].title">
@@ -78,8 +86,27 @@
                     </div>
                 </form>
                 <form v-if="sidebarContentToShow === 'createNewTodo'">
+                    <h3>Create a new todo</h3>
+                    <label for="todoName">Todo:</label>
+                    <input id="todoName" name="todoName" type="text" placeholder="Do things..." v-model="tempNewTodo.name">
+                    <label for="todoCompleted">
+                        <input name="todoCompleted" id="todoCompleted" type="checkbox" v-bind:checked="tempNewTodo.isCompleted" v-model="tempNewTodo.isCompleted"> Is completed</label>
+                    <div class="buttons">
+                        <button type="button" class="is-danger" v-on:click="isSidebarOpen = false">Cancel</button>
+                        <button type="button" class="is-confirm" v-on:click="addNewTodo">Create todo</button>
+                    </div>
                 </form>
-                <form v-if="sidebarContentToShow === 'editTodo'">
+                <form v-if="sidebarContentToShow === 'editTodo' && todoLists[currentListIndex].items.length > 0">
+                    <h3>Edit todo</h3>
+                    <label for="todoName">Todo:</label>
+                    <input id="todoName" name="todoName" type="text" placeholder="Do things..." v-model="todoLists[currentListIndex].items[currentTodoIndex].name">
+                    <label for="todoCompleted">
+                        <input name="todoCompleted" id="todoCompleted" type="checkbox" v-bind:checked="todoLists[currentListIndex].items[currentTodoIndex].isCompleted"
+                            v-model="todoLists[currentListIndex].items[currentTodoIndex].isCompleted"> Is completed</label>
+                    <div class="buttons">
+                        <button type="button" class="is-danger" v-on:click="deleteTodo">Delete todo</button>
+                        <button type="button" class="is-confirm" v-on:click="isSidebarOpen = false">Done</button>
+                    </div>
                 </form>
             </div>
         </div>

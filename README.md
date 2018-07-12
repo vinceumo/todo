@@ -431,7 +431,7 @@ var app = new Vue({
       this.isSidebarOpen = true;
       this.isNavOpen = false;
       this.sidebarContentToShow = contentToShow;
-    },
+    }
     //...
   }
 });
@@ -451,6 +451,8 @@ And ta-dah we are now rendering the create a new list form. As you may have alre
 
 ### Edit list form
 
+#### Delete a list
+
 We are going to start with the **delete list** button. We are going to create a new method, `deleteList`. It will remove the current shown list and show the first one.
 
 ```js
@@ -467,11 +469,166 @@ deleteList: function() {
 <button type="button" class="is-danger" v-on:click="deleteList">Delete list</button>
 ```
 
+Now we can remove lists, but if we try to remove all lists we get an error and our app stop to work.
+
+```
+[Vue warn]: Error in render: "TypeError: todoLists[currentListIndex] is undefined"
+```
+
+As you might guess we have this error because our `todoLists` is empty and we still try to render some part of our application that rely on the values of `todoLists`. We are going to use to use conditional rendering `v-if` and `v-else`.
+
+We are going to render our main content only if `todoLists.length > 0` moreover we want the user to able to create a new list, we are going to use `v-else` to show an alternative main content that will help the user create a new list.
+
+```html
+<main v-if="todoLists.length > 0">
+  <!-- ... -->
+</main>
+<main v-else>
+  <header style="background-image: url(https://source.unsplash.com/featured/?cat">
+      <div class="header-content">
+          <h1>Please create a new list</h1>
+          <button class="is-add" v-on:click="openSidebar('createNewList')">Create a new list</button>
+      </div>
+  </header>
+</main>
+```
+
+#### Change the title and keyword value
+
+Lets get back to our **editList** form. We are going to:
+
+- Bind our inputs with the right `todoLists` element using `v-model`.
+- When we click on done we want to close our slider.
+- Only want to render this form if `todoLists.length > 0`
+
+```html
+<form v-if="sidebarContentToShow === 'editList' && todoLists.length > 0">
+    <h3>Edit list</h3>
+    <label for="listTitle">Title:</label>
+    <input id="listTitle" name="listTitle" type="text" placeholder="My amazing next trip to south america" v-model="todoLists[currentListIndex].title">
+    <label for="listKeyword">Keyword:</label>
+    <input id="listKeyword" name="listKeyword" type="text" placeholder="Colombia" v-model="todoLists[currentListIndex].keyword">
+    <div class="buttons">
+        <button type="button" class="is-danger" v-on:click="deleteList">Delete list</button>
+        <button type="button" class="is-confirm" v-on:click="isSidebarOpen = false">Done</button>
+    </div>
+</form>
+```
+
 ### Documentation references
 
 - [Conditional Rendering](https://vuejs.org/v2/guide/conditional.html)
 - [v-if](https://vuejs.org/v2/api/#v-if)
+- [v-else](https://vuejs.org/v2/guide/conditional.html#v-else)
 
-## Create a new todo
+## Create and edit a todo
 
-## Edit a todo
+This tutorial is almost finish, in this last part we are going to create two features:
+
+- Create a new todo in a list
+- Edit and delete an existing todo
+
+Sound similar to what we have done with the lists right? It is going to be almost the same steps.
+
+#### Create a todo
+
+In our data we are going to create a new element of `tempNewList`:
+
+```js
+tempNewTodo: [
+  {
+    name: null,
+    isCompleted: false
+  }
+],
+```
+
+We now need a new method so we can add our new todo to a list in `todoLists`
+
+```js
+addNewTodo: function() {
+  var todoName= this.tempNewTodo.name;
+  var todoCompleted = this.tempNewTodo.isCompleted;
+  if (todoName == null) {
+    todoName = "🕵️‍ unnamed todo";
+  }
+  this.todoLists[this.currentListIndex].items.push({
+    name: todoName,
+    isCompleted: todoCompleted
+  });
+  this.isSidebarOpen = false;
+  this.tempNewTodo.name = null;
+  this.tempNewTodo.isCompleted = false;
+}
+```
+
+Now lets dive in our html.
+
+First we need to open the sidebar with the **createNewTodo** render.
+
+```html
+<button class="is-add" v-on:click="openSidebar('createNewTodo')">New Todo</button>
+```
+
+As we did before we are going to bind our inputs usin `v-model` and use the `addNewTodo` method to push our new values.
+
+```html
+<form v-if="sidebarContentToShow === 'createNewTodo'">
+    <h3>Create a new todo</h3>
+    <label for="todoName">Name:</label>
+    <input id="todoName" name="todoName" type="text" placeholder="Do things..." v-model="tempNewTodo.name">
+    <label for="todoCompleted"><input name="todoCompleted" id="todoCompleted" type="checkbox" v-bind:checked="tempNewTodo.isCompleted" v-model="tempNewTodo.isCompleted"> Is completed</label>
+    <div class="buttons">
+        <button type="button" class="is-danger" v-on:click="isSidebarOpen = false">Cancel</button>
+        <button type="button" class="is-confirm" v-on:click="addNewTodo">Create todo</button>
+    </div>
+</form>
+```
+
+#### Edit a todo
+
+Last but not least we want to edit our todo.
+
+First we need to know the index of the todo we are going to edit, in our data we are going to create `currentTodoIndex`.
+
+```js
+currentTodoIndex: 0,
+```
+
+We will need a `deleteTodo` method that will remove the current todo.
+
+```js
+deleteTodo: function() {
+  this.todoLists[this.currentListIndex].items.splice(this.currentTodoIndex, 1);
+  this.isSidebarOpen = false;
+  this.currentTodoIndex = 0;
+}
+```
+
+Now lets have look at our html.
+
+First we want to open our slider and change the value of `currentTodoIndex`.
+
+```html
+<button class="is-primary" v-on:click="openSidebar('editTodo'); currentTodoIndex = index">Edit todo</button>
+```
+
+In our **editTodo** form we want to:
+
+* Show our form only if `todoLists[currentListIndex].items.length > 0`
+* Bind the todo name and if completed using `v-model`
+* When we click on *Delete todo* we trigger the method `deleteTodo`
+* when we click on *Done* we close our sidebar
+
+```html
+<form v-if="sidebarContentToShow === 'editTodo'  && todoLists[currentListIndex].items.length > 0">
+  <h3>Edit todo</h3>
+  <label for="todoName">Todo:</label>
+  <input id="todoName" name="todoName" type="text" placeholder="Do things..." v-model="todoLists[currentListIndex].items[currentTodoIndex].name">
+  <label for="todoCompleted"><input name="todoCompleted" id="todoCompleted" type="checkbox" v-bind:checked="todoLists[currentListIndex].items[currentTodoIndex].isCompleted" v-model="todoLists[currentListIndex].items[currentTodoIndex].isCompleted"> Is completed</label>
+  <div class="buttons">
+      <button type="button" class="is-danger" v-on:click="deleteTodo">Delete todo</button>
+      <button type="button" class="is-confirm" v-on:click="isSidebarOpen = false">Done</button>
+  </div>
+</form>
+```

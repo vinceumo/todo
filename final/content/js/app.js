@@ -8,10 +8,17 @@ document.addEventListener(
         isSidebarOpen: false,
         sidebarContentToShow: null,
         currentListIndex: 0,
+        currentTodoIndex: 0,
         tempNewList: [
           {
             title: null,
             keyword: null
+          }
+        ],
+        tempNewTodo: [
+          {
+            name: null,
+            isCompleted: false
           }
         ],
         todoLists: [
@@ -73,6 +80,25 @@ document.addEventListener(
           this.todoLists.splice(this.currentListIndex, 1);
           this.currentListIndex = 0;
           this.isSidebarOpen = false;
+        },
+        addNewTodo: function() {
+          var todoName= this.tempNewTodo.name;
+          var todoCompleted = this.tempNewTodo.isCompleted;
+          if (todoName == null) {
+            todoName = "🕵️‍ unnamed todo";
+          }
+          this.todoLists[this.currentListIndex].items.push({
+            name: todoName,
+            isCompleted: todoCompleted
+          });
+          this.isSidebarOpen = false;
+          this.tempNewTodo.name = null;
+          this.tempNewTodo.isCompleted = false;
+        },
+        deleteTodo: function() {
+          this.todoLists[this.currentListIndex].items.splice(this.currentTodoIndex, 1);
+          this.isSidebarOpen = false;
+          this.currentTodoIndex = 0;
         }
       }
     });
