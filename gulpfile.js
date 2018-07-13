@@ -8,7 +8,7 @@ var rename = require('gulp-rename');
 var purgeSourcemaps = require('gulp-purge-sourcemaps');
 
 var inputScss = "./content/scss/**/*.scss"; /*watches sub folders inside sass folder */ 
-var output = "./dist/css"; 
+var output = "./content/css"; 
 
 var sassOptions = {
   errLogToConsole: true,
