@@ -1,6 +1,6 @@
 # Vue 101 todo tutorial
 
-The goal of this tutorial is to give an introduction to vue.js
+The goal of this tutorial is to give an introduction to vue.js ❤.
 
 Vue.js is a progressive framework for building user interfaces.
 
@@ -48,11 +48,11 @@ Clone the [starter materials from github](https://github.com/vinceumo/vue-101-da
 
 The final version of this tutorial can be found on [this repo](#)
 
-Vue CDN is already included in our HTML, as well as our CSS and app.js 😃.
+Vue CDN is already included in our index.html, as well as our CSS and content/js/app.js 😃.
 
 ## Toggle navigation on mobile
 
-We are going to show and hide the side navigation on mobile.
+We are going to show and hide the side navigation on mobile (📱 < 850px).
 
 When we click on **Menu** we want `<nav>` to toggle the class `.is-open`.
 
@@ -88,6 +88,8 @@ We are going to use the event handler 'on click'. In vue.js we can use `v-on:`, 
 ```html
 <button v-on:click="isNavOpen = !isNavOpen" class="menu">Menu</button>
 ```
+
+As you can see we can pass an inline javascript statement, we can as well use a method (function), we will see later in this tutorial how to use this last one.
 
 ### Documentation references
 
@@ -214,7 +216,7 @@ To render our todos in the main section we are going to use `v-for`. As we want 
 
 We are going to use `v-bind` to checked our todos if these ones are already checked.
 
-We are using `v-model` to update the value of `isCompleted` from our todos when we click on the checkbox. When our checkbox is checked isCompleted will get the value of true and the parent li will automatically get the class `is-completed` as isCompleted is `true`.
+We are using `v-model` to update the value of `isCompleted` from our todos when we click on the checkbox. When our checkbox is checked isCompleted will get the value of true and the parent `li` will automatically get the class `is-completed` as isCompleted is `true`.
 
 The `v-model` directive creates a two-way data bindings meaning when the value gets updated the UI will be updated as well.
 
@@ -230,7 +232,7 @@ The `v-model` directive creates a two-way data bindings meaning when the value g
       v-model="todo.isCompleted">
       {{todo.name}}
     </label>
-    <button class="is-danger">Delete item</button>
+    <button class="is-danger">Edit todo</button>
   </li>
   <li>
     <button class="is-add">New Todo</button>
@@ -262,7 +264,7 @@ We want to be able to change the current list being displayed. The current list 
 
 ### Toggle the sidebar
 
-When clicking on **Create a new list** we want to show the `.sidebar`. To do so we want to add the class `.is-open` to this one and close the nav bar if this one is open on mobile. The way to do this is quite similar to what we have done with the navigation on mobile.
+When clicking on **Create a new list** we want to show the `.sidebar`. To do so we want to add the class `.is-open` to this one, then close the nav bar if this one is open on mobile. The way to do this is quite similar to what we have done with the navigation on mobile.
 
 In our data we are going to add a new entry of `isSidebarOpen: false`:
 
@@ -286,13 +288,13 @@ Now we want to bind our class `.is-open` to our `.sidebar`:
 </div>
 ```
 
-Last but not least, we need to add on event handler on click on **Create a new list** that will open the sidebar and close the navigation on mobile:
+We need to add on event handler on click on **Create a new list** that will open the sidebar and close the navigation on mobile:
 
 ```html
 <button class="is-add" v-on:click="isSidebarOpen = true; isNavOpen = false;">Create a new list</button>
 ```
 
-Nice, now we can open our sidebar.
+Nice, now we can open our sidebar 🎉.
 
 Now lets close the sidebar when we click on **cancel**:
 
@@ -671,3 +673,7 @@ In our **editTodo** form we want to:
   </div>
 </form>
 ```
+
+🎉🎉🎉🎉🎉 Our todo is now finished 
+
+## Set up a PWA
