@@ -44,7 +44,8 @@
                 <ul>
                     <li v-for="(todo, index) in todoLists[currentListIndex].items" v-bind:class="{'is-completed': todo.isCompleted}">
                         <label v-bind:for="'todo' + index">
-                            <input type="checkbox" v-bind:name="'todo' + index" v-bind:id="'todo' + index" v-bind:checked="todo.isCompleted" v-model="todo.isCompleted">{{todo.name}}</label>
+                            <input type="checkbox" v-bind:name="'todo' + index" v-bind:id="'todo' + index" v-bind:checked="todo.isCompleted" v-model="todo.isCompleted"
+                            v-on:change="updateTodoLocalStorage">{{todo.name}}</label>
                         <button class="is-primary" v-on:click="openSidebar('editTodo'); currentTodoIndex = index">Edit todo</button>
                     </li>
                     <li>
@@ -82,7 +83,7 @@
                     <input id="listKeyword" name="listKeyword" type="text" placeholder="Colombia" v-model="todoLists[currentListIndex].keyword">
                     <div class="buttons">
                         <button type="button" class="is-danger" v-on:click="deleteList">Delete list</button>
-                        <button type="button" class="is-confirm" v-on:click="isSidebarOpen = false">Done</button>
+                        <button type="button" class="is-confirm" v-on:click="updateTodoLocalStorage(); isSidebarOpen = false">Done</button>
                     </div>
                 </form>
                 <form v-if="sidebarContentToShow === 'createNewTodo'">
@@ -90,7 +91,8 @@
                     <label for="todoName">Todo:</label>
                     <input id="todoName" name="todoName" type="text" placeholder="Do things..." v-model="tempNewTodo.name">
                     <label for="todoCompleted">
-                        <input name="todoCompleted" id="todoCompleted" type="checkbox" v-bind:checked="tempNewTodo.isCompleted" v-model="tempNewTodo.isCompleted"> Is completed</label>
+                        <input name="todoCompleted" id="todoCompleted" type="checkbox" v-bind:checked="tempNewTodo.isCompleted" v-model="tempNewTodo.isCompleted"
+                        v-on:change="updateTodoLocalStorage"> Is completed</label>
                     <div class="buttons">
                         <button type="button" class="is-danger" v-on:click="isSidebarOpen = false">Cancel</button>
                         <button type="button" class="is-confirm" v-on:click="addNewTodo">Create todo</button>
@@ -105,7 +107,7 @@
                             v-model="todoLists[currentListIndex].items[currentTodoIndex].isCompleted"> Is completed</label>
                     <div class="buttons">
                         <button type="button" class="is-danger" v-on:click="deleteTodo">Delete todo</button>
-                        <button type="button" class="is-confirm" v-on:click="isSidebarOpen = false">Done</button>
+                        <button type="button" class="is-confirm" v-on:click="updateTodoLocalStorage(); isSidebarOpen = false">Done</button>
                     </div>
                 </form>
             </div>

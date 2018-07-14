@@ -1,9 +1,4 @@
-var db;
-var request = window.indexedDB.open("TodoDatabase", 4);
-request.onsuccess = function(event) {
-  db = event.target.result;
-};
-
+var STORAGE_KEY = 'todoLocalStorage';
 
 document.addEventListener(
   "DOMContentLoaded",
@@ -30,6 +25,9 @@ document.addEventListener(
         ],
         todoLists: []
       },
+      created() {
+        this.todoLists = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      },
       methods: {
         openSidebar: function(contentToShow) {
           this.isSidebarOpen = true;
@@ -54,11 +52,13 @@ document.addEventListener(
           this.isSidebarOpen = false;
           this.tempNewList.title = null;
           this.tempNewList.keyword = null;
+          this.updateTodoLocalStorage();
         },
         deleteList: function() {
           this.todoLists.splice(this.currentListIndex, 1);
           this.currentListIndex = 0;
           this.isSidebarOpen = false;
+          this.updateTodoLocalStorage();
         },
         addNewTodo: function() {
           var todoName= this.tempNewTodo.name;
@@ -73,11 +73,16 @@ document.addEventListener(
           this.isSidebarOpen = false;
           this.tempNewTodo.name = null;
           this.tempNewTodo.isCompleted = false;
+          this.updateTodoLocalStorage();
         },
         deleteTodo: function() {
           this.todoLists[this.currentListIndex].items.splice(this.currentTodoIndex, 1);
           this.isSidebarOpen = false;
           this.currentTodoIndex = 0;
+          this.updateTodoLocalStorage();
+        },
+        updateTodoLocalStorage: function () {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(this.todoLists));
         }
       }
     });

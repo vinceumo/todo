@@ -676,33 +676,14 @@ In our **editTodo** form we want to:
 
 🎉🎉🎉🎉🎉 The UI of our todo is now done 
 
-# Offline Progressive Web App (PWA) with workbox.js and IndexedDB
+# Offline Progressive Web App (PWA) with workbox.js and LocalStorage
 
-## IndexedDB
+## LocalStorage
 
-We want to save our todos locally. We are going to use **IndexedDB**
-
-> IndexedDB is a low-level API for client-side storage of significant amounts of structured data, including files/blobs. This API uses indexes to enable high-performance searches of this data.
-[MDN](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
-
-* We are going to open `TodoDatabase`
-* Store `todoLists` in our new database
-
-In our `app.js` file, at the beginning of the document, in the global scope, we are going to set our variables. First we are setting our database variable `db`, the we  open `TodoDatabase`  by setting the variable `request`.
-
-```js
-var db;
-var request = window.indexedDB.open("TodoDatabase", 1);
-```
-
-* `"TodoDatabase"` is the name of our database.
-* `1` is the version of our database. If we want to update our database we can then update the version number.
-
-
-https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB
-
-https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
-
+https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API
+https://vuejs.org/v2/cookbook/client-side-storage.html
+https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+https://vuejs.org/v2/guide/instance.html
 
 ## Set up a PWA
 
