@@ -674,6 +674,62 @@ In our **editTodo** form we want to:
 </form>
 ```
 
-🎉🎉🎉🎉🎉 Our todo is now finished 
+🎉🎉🎉🎉🎉 The UI of our todo is now done 
+
+# Offline Progressive Web App (PWA) with workbox.js and IndexedDB
+
+## IndexedDB
+
+We want to save our todos locally. We are going to use **IndexedDB**
+
+> IndexedDB is a low-level API for client-side storage of significant amounts of structured data, including files/blobs. This API uses indexes to enable high-performance searches of this data.
+[MDN](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+
+* We are going to open `TodoDatabase`
+* Store `todoLists` in our new database
+
+In our `app.js` file, at the beginning of the document, in the global scope, we are going to set our variables. First we are setting our database variable `db`, the we  open `TodoDatabase`  by setting the variable `request`.
+
+```js
+var db;
+var request = window.indexedDB.open("TodoDatabase", 1);
+```
+
+* `"TodoDatabase"` is the name of our database.
+* `1` is the version of our database. If we want to update our database we can then update the version number.
+
+
+https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB
+
+https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API
+
 
 ## Set up a PWA
+
+### Generate icon assets 
+
+https://realfavicongenerator.net/
+
+### Manifest
+
+### Service workers
+
+For our service workers we are going to us [workbox.js](https://developers.google.com/web/tools/workbox/).
+
+> Workbox is a library that bakes in a set of best practices and removes the boilerplate every developer writes when working with service workers.
+
+First create a `sw.js` file at the root of our project.
+
+In our **index.html**
+
+```html
+<script>
+    // Check that service workers are registered
+    if ('serviceWorker' in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js');
+        });
+    }
+</script>
+```
