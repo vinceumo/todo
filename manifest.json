@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "todo",
+  "short_name": "todo",
+  "version": "1",
+  "author": "Vincent Humeau",
+  "lang": "en-GB",
+  "icons": [
+    {
+      "src": "content/img/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "content/img/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#77c4d3",
+  "background_color": "#77c4d3",
+  "orientation": "portrait",
+  "scope": "/todo/",
+  "start_url": "/todo/"
+}

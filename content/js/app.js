@@ -23,7 +23,7 @@ document.addEventListener(
         ],
         todoLists: []
       },
-      created() {
+      created: function() {
         this.todoLists = JSON.parse(localStorage.getItem('todoLocalStorage') || '[]');
       },
       watch: {

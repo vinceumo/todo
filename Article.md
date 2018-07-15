@@ -755,22 +755,68 @@ Now if we reload, close and reopen our app all our todos and list have been save
 - [Watchers](https://vuejs.org/v2/guide/computed.html#Watchers)
 - [Created](https://vuejs.org/v2/api/#created)
 
-
 # Offline Progressive Web App (PWA) with workbox.js
 
 ## Set up a PWA
 
 ### Generate icon assets 
 
-https://realfavicongenerator.net/
+First we are going to include all the icon assets in our project. The icons have already been generated using https://realfavicongenerator.net/. They are included in `content/img/`.
+
+In the head of our HTML we want to include:
+
+```html
+<link rel="apple-touch-icon" sizes="180x180" href="content/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="content/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="content/img/favicon-16x16.png">
+<link rel="mask-icon" href="content/img/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="content/img/favicon.ico">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-config" content="content/img/browserconfig.xml">
+<meta name="theme-color" content="#77c4d3">
+```
 
 ### Manifest
 
+Now let's create a `manifest.json` file at the root of our project.
+
+In our HTML file we want to include it.
+
+```html
+<link rel="manifest" href="manifest.json">
+```
+
+```json
+{
+  "manifest_version": 2,
+  "name": "todo",
+  "short_name": "todo",
+  "version": "1",
+  "author": "Vincent Humeau",
+  "lang": "en-GB",
+  "icons": [
+    {
+      "src": "content/img/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "content/img/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#77c4d3",
+  "background_color": "#77c4d3",
+  "orientation": "portrait",
+  "scope": "/todo/",
+  "start_url": "/todo/"
+}
+```
+
 ### Service workers
 
-For our service workers we are going to us [workbox.js](https://developers.google.com/web/tools/workbox/).
-
-> Workbox is a library that bakes in a set of best practices and removes the boilerplate every developer writes when working with service workers.
+https://gist.github.com/Omranic/4e648fa38caab7b8207d3e237fde0c77#create-service-worker
 
 First create a `sw.js` file at the root of our project.
 
@@ -778,9 +824,7 @@ In our **index.html**
 
 ```html
 <script>
-    // Check that service workers are registered
     if ('serviceWorker' in navigator) {
-        // Use the window load event to keep the page load performant
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('sw.js');
         });
