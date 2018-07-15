@@ -676,14 +676,87 @@ In our **editTodo** form we want to:
 
 🎉🎉🎉🎉🎉 The UI of our todo is now done 
 
-# Offline Progressive Web App (PWA) with workbox.js and LocalStorage
-
 ## LocalStorage
 
-https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API
-https://vuejs.org/v2/cookbook/client-side-storage.html
-https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
-https://vuejs.org/v2/guide/instance.html
+When we reload the page of our application, it goes back to our dummy values. How great would it be if we could store our lists and todos locally?
+
+We are going to use [window.localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage). It is part of the [Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API).
+
+**localStorage** allow us to store data with no expiration date.
+
+In our **app.js** we are going to create a new method `updateTodoLocalStorage`
+
+```js
+//...
+updateTodoLocalStorage: function () {
+  localStorage.setItem('todoLocalStorage', JSON.stringify(this.todoLists));
+}
+//...
+```
+
+We are using `setItem()` method from the Web Storage API. We pass the following parameters:
+
+* `setItem(keyName, keyValue);`
+  * `keyName`: name of the key we want to create/update (`'todoLocalStorage'`).
+  * `keyValue`: value we want to give the key you are creating/updating (`JSON.stringify(this.todoLists)`).
+
+We want now to use this method every time we update the values of our todos or lists. Vue allow us to react to data changes with the `watch` option. Every time with have a change in our `todoLists` we want to call our `updateTodoLocalStorage` method. As our object have nested values, we want to detect changes inside this values. We can pass `deep: true` to do so.
+
+```js
+var app = new Vue({
+  el: "#app",
+  data: {
+    //...
+  },
+  watch: {
+    todoLists: {
+      handler(){
+        this.updateTodoLocalStorage();
+      },
+      deep: true
+    }
+  },
+  methods: {
+    //...
+    updateTodoLocalStorage: function () {
+      localStorage.setItem('todoLocalStorage', JSON.stringify(this.todoLists));
+    }
+  }
+});
+```
+
+Now lets inspect our app and look into **Local Storage**. If we create/update a list or a todo we can see our `todoLocalStorage` storage being updated.
+
+Now, when we load our page, we want to set our `todoLists` as our `todoLocalStorage`. Vue comes with a some [Lifecycle Hooks](https://vuejs.org/v2/api/#created). We re going to use the `created: function()` one to set our values. We are going as well to remove our dummy values.
+
+```js
+var app = new Vue({
+  el: "#app",
+  data: {
+    //...
+    todoLists: []
+  },
+  created: function() {
+    this.todoLists = JSON.parse(localStorage.getItem('todoLocalStorage') || '[]');
+  },
+  watch: {
+    //...
+  },
+  methods: {
+    //...
+  }
+});
+```
+
+Now if we reload, close and reopen our app all our todos and list have been saved 🤟.
+
+### Documentation references
+
+- [Watchers](https://vuejs.org/v2/guide/computed.html#Watchers)
+- [Created](https://vuejs.org/v2/api/#created)
+
+
+# Offline Progressive Web App (PWA) with workbox.js
 
 ## Set up a PWA
 

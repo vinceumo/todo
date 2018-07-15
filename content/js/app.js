@@ -1,5 +1,3 @@
-var STORAGE_KEY = 'todoLocalStorage';
-
 document.addEventListener(
   "DOMContentLoaded",
   function() {
@@ -26,7 +24,15 @@ document.addEventListener(
         todoLists: []
       },
       created() {
-        this.todoLists = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        this.todoLists = JSON.parse(localStorage.getItem('todoLocalStorage') || '[]');
+      },
+      watch: {
+        todoLists: {
+          handler(){
+            this.updateTodoLocalStorage();
+          },
+          deep: true
+        }
       },
       methods: {
         openSidebar: function(contentToShow) {
@@ -52,13 +58,11 @@ document.addEventListener(
           this.isSidebarOpen = false;
           this.tempNewList.title = null;
           this.tempNewList.keyword = null;
-          this.updateTodoLocalStorage();
         },
         deleteList: function() {
           this.todoLists.splice(this.currentListIndex, 1);
           this.currentListIndex = 0;
           this.isSidebarOpen = false;
-          this.updateTodoLocalStorage();
         },
         addNewTodo: function() {
           var todoName= this.tempNewTodo.name;
@@ -73,16 +77,14 @@ document.addEventListener(
           this.isSidebarOpen = false;
           this.tempNewTodo.name = null;
           this.tempNewTodo.isCompleted = false;
-          this.updateTodoLocalStorage();
         },
         deleteTodo: function() {
           this.todoLists[this.currentListIndex].items.splice(this.currentTodoIndex, 1);
           this.isSidebarOpen = false;
           this.currentTodoIndex = 0;
-          this.updateTodoLocalStorage();
         },
         updateTodoLocalStorage: function () {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(this.todoLists));
+          localStorage.setItem('todoLocalStorage', JSON.stringify(this.todoLists));
         }
       }
     });
