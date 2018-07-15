@@ -19,6 +19,7 @@
   ],
   "theme_color": "#77c4d3",
   "background_color": "#77c4d3",
+  "display": "standalone",
   "orientation": "portrait",
   "scope": "/todo/",
   "start_url": "/todo/"
