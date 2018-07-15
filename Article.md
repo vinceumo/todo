@@ -755,9 +755,11 @@ Now if we reload, close and reopen our app all our todos and list have been save
 - [Watchers](https://vuejs.org/v2/guide/computed.html#Watchers)
 - [Created](https://vuejs.org/v2/api/#created)
 
-# Offline Progressive Web App (PWA) with workbox.js
+# Offline Progressive Web App (PWA)
 
 ## Set up a PWA
+
+{What is PWA}
 
 ### Generate icon assets 
 
@@ -777,6 +779,8 @@ In the head of our HTML we want to include:
 ```
 
 ### Manifest
+
+{What is a manifest}
 
 Now let's create a `manifest.json` file at the root of our project.
 
@@ -816,6 +820,8 @@ In our HTML file we want to include it.
 
 ### Service workers
 
+{What is a sw}
+
 https://gist.github.com/Omranic/4e648fa38caab7b8207d3e237fde0c77#create-service-worker
 
 First create a `sw.js` file at the root of our project.
@@ -831,3 +837,14 @@ In our **index.html**
     }
 </script>
 ```
+
+{SW}
+
+
+TODO
+
+- update layout on mobile o list cta are bigger
+- Input text to be biggers
+- Get screen shoots
+- Create material starter pack
+- Dam digital paragraph
