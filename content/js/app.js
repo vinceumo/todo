@@ -34,7 +34,19 @@ document.addEventListener(
           deep: true
         }
       },
+      computed: {
+        
+      },
       methods: {
+        totalTodosCompleted: function(i){
+          var total = 0;
+          for (var j = 0; j < this.todoLists[i].items.length; j++) {
+            if(this.todoLists[i].items[j].isCompleted){
+              total++;
+            }
+          }
+          return total;
+        },
         openSidebar: function(contentToShow) {
           this.isSidebarOpen = true;
           this.isNavOpen = false;

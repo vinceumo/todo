@@ -108,7 +108,7 @@ button {
 
 .menu {
   position: fixed;
-  bottom: 0.5rem;
+  bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
   background-color: $white;
@@ -129,7 +129,7 @@ button {
 }
 
 nav {
-  height: calc(100vh - 3rem);
+  height: calc(100vh - 3.5rem);
   width: 100vw;
   padding-bottom: 3rem;
   overflow-x: hidden;
@@ -160,9 +160,13 @@ nav {
     margin: 0;
 
     li {
+      &.is-active {
+        background-color: $grey;
+      }
+
       button {
         width: 100%;
-        padding: 0.5rem 1rem;
+        padding: 1rem;
         display: flex;
         justify-content: space-between;
 
@@ -214,9 +218,9 @@ nav {
 }
 
 main {
-  height: calc(100vh - 3rem);
+  height: calc(100vh - 3.5rem);
   background-color: $grey;
-  padding-bottom: 3rem;
+  padding-bottom: 3.5rem;
   overflow-x: hidden;
   overflow-y: auto;
 

@@ -249,8 +249,10 @@ The `v-model` directive creates a two-way data bindings meaning when the value g
 
 We want to be able to change the current list being displayed. The current list being displayed is set by `currentListIndex` in our app's data. When we click on one of the list items we want to change `currentListIndex` to the index of this one and close the side navigation if open.
 
+We want as well, to show the user the current list behind display, to do so we are going to add the class `.is-active` if `currentListIndex === index`
+
 ```html
-<li v-for="(todoList, index) in todoLists">
+<li v-for="(todoList, index) in todoLists"  v-bind:class="{'is-active' : currentListIndex === index}">
     <button v-on:click="currentListIndex = index; isNavOpen = false">
         {{todoList.title}}
         <span>
@@ -626,6 +628,35 @@ As we did before we are going to bind our inputs using `v-model` and use the `ad
 </form>
 ```
 
+As we are now binding the data for `isCompleted` in our todos, we are going to show, in our navigation the number of completed todos.
+
+In our **app.js** we are going to create a `totalTodosCompleted` method passing the index of the current todoList.
+
+```js
+totalTodosCompleted: function(i){
+  var total = 0;
+  for (var j = 0; j < this.todoLists[i].items.length; j++) {
+    if(this.todoLists[i].items[j].isCompleted){
+      total++;
+    }
+  }
+  return total;
+}
+```
+
+And now in our `navigation` we are going to use our new method to return the total of completed todos.
+
+```html
+<li v-for="(todoList, index) in todoLists" v-bind:class="{'is-active' : currentListIndex === index}">
+    <button v-on:click="currentListIndex = index; isNavOpen = false">
+        {{todoList.title}}
+        <span>
+            {{totalTodosCompleted(index)}} / {{todoList.items.length}}
+        </span>
+    </button>
+</li>
+```
+
 #### Edit a todo
 
 Last but not least we want to edit our todo.
@@ -755,7 +786,7 @@ Now if we reload, close and reopen our app all our todos and list have been save
 - [Watchers](https://vuejs.org/v2/guide/computed.html#Watchers)
 - [Created](https://vuejs.org/v2/api/#created)
 
-# Offline Progressive Web App (PWA)
+# Bonus - Offline Progressive Web App (PWA)
 
 ## Set up a PWA
 

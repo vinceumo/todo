@@ -31,11 +31,11 @@
         <div class="page-container">
             <nav v-bind:class="{'is-open': isNavOpen}">
                 <ul>
-                    <li v-for="(todoList, index) in todoLists">
+                    <li v-for="(todoList, index) in todoLists" v-bind:class="{'is-active' : currentListIndex === index}">
                         <button v-on:click="currentListIndex = index; isNavOpen = false">
                             {{todoList.title}}
                             <span>
-                                {{todoList.items.length}}
+                               {{totalTodosCompleted(index)}} / {{todoList.items.length}}
                             </span>
                         </button>
                     </li>
