@@ -5,9 +5,15 @@ $black: #000;
 $grey: #f7f7f7;
 $blue: #77c4d3;
 $red: #ea2e49;
-$green: #34D980;
+$green: #34d980;
 
 $desktop-bp: 850px;
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
 
 body {
   background-color: $white;
@@ -21,7 +27,9 @@ button {
   padding: 0.5rem 1rem;
   cursor: pointer;
 
-  &.is-danger, &.is-confirm,  &.is-primary {
+  &.is-danger,
+  &.is-confirm,
+  &.is-primary {
     position: relative;
     padding-left: 0;
     padding-right: 0;
@@ -106,20 +114,6 @@ button {
   }
 }
 
-input[type="text"]{
-  padding: 1rem 0.75rem;
-  opacity: 0.7;
-  transition: opacity 0.4s ease-in-out;
-
-  &:hover{
-    opacity: 0.8;
-  }
-
-  &:focus{
-    opacity: 1;
-  }
-}
-
 .menu {
   position: fixed;
   bottom: 1rem;
@@ -130,20 +124,20 @@ input[type="text"]{
   box-shadow: 2px 2px 10px transparentize($color: $black, $amount: 0.7);
   z-index: 10;
 
-  @media screen and (min-width: $desktop-bp){
+  @media screen and (min-width: $desktop-bp) {
     display: none;
   }
 }
 
 .page-container {
-  @media screen and (min-width: $desktop-bp){
+  @media screen and (min-width: $desktop-bp) {
     display: grid;
     grid-template-columns: 320px 1fr;
   }
 }
 
 nav {
-  height: calc(100vh - 3.5rem);
+  height: 100vh;
   width: 100vw;
   padding-bottom: 3rem;
   overflow-x: hidden;
@@ -160,7 +154,7 @@ nav {
     transform: translate3d(0, 0, 0);
   }
 
-  @media screen and (min-width: $desktop-bp){
+  @media screen and (min-width: $desktop-bp) {
     position: unset;
     transform: translate3d(0, 0, 0);
     width: auto;
@@ -205,8 +199,8 @@ nav {
 }
 
 .sidebar {
-  height: calc(100vh - 4rem);
-  width: calc(100vw - 4rem);
+  height: 100vh;
+  width: 100vw;
   padding: 2rem;
   overflow-x: hidden;
   overflow-y: auto;
@@ -232,7 +226,7 @@ nav {
 }
 
 main {
-  height: calc(100vh - 3.5rem);
+  height: 100vh;
   background-color: $grey;
   padding-bottom: 3.5rem;
   overflow-x: hidden;
@@ -265,7 +259,7 @@ main {
         position: relative;
 
         &:after {
-          content: '';
+          content: "";
           height: 1px;
           width: 0;
           background-color: $black;
@@ -313,17 +307,18 @@ header {
     position: relative;
     z-index: 1;
 
-    button{
+    button {
       background-color: $white;
       padding: 0.5rem;
 
-      &:after{
+      &:after {
         bottom: 0.25rem;
         left: 0.5rem;
       }
 
-      &:hover, &:focus {
-        &:after{
+      &:hover,
+      &:focus {
+        &:after {
           width: calc(100% - 1rem);
         }
       }
@@ -340,6 +335,17 @@ form {
   input[type="text"] {
     margin-bottom: 1rem;
     width: 100%;
+    padding: 1rem 0.75rem;
+    opacity: 0.7;
+    transition: opacity 0.4s ease-in-out;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:focus {
+      opacity: 1;
+    }
   }
 
   .buttons {
