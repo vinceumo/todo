@@ -24,30 +24,44 @@ Here are the subjects this tutorial will cover:
 
 ## Table of Contents
 
-- [Getting started](#Getting-started)
-- [Toggle navigation on mobile](#toggle-navigation-on-mobile)
-- [Bind our todo lists to the side navigation](#bind-our-todo-lists-to-the-side-navigation)
-- [Main section](#main-section)
-  - [Header](#header)
-  - [Todos](#todos)
-- [Change current list](#change-current-list)
-- [Create a new list](#create-a-new-list)
-  - [Toggle the sidebar](#toggle-the-sidebar)
-  - [Add the new list](#add-the-new-list)
-- [Edit a list](#edit-a-list)
-  - [Toggle sidebar content](#toggle-sidebar-content)
-  - [Edit list form](#edit-list-form)
-    - [Delete a list](#delete-a-list)
-    - [Change the title and keyword value](#change-the-title-and-keyword-value)
-- [Create and edit a todo](#create-and-edit-a-todo)
-  - [Create a todo](#create-a-todo)
-  - [Edit a todo](#edit-a-todo)
+- [Vue.js 101 todo PWA tutorial](#vuejs-101-todo-pwa-tutorial)
+  - [Table of Contents](#table-of-contents)
+  - [Getting started](#getting-started)
+  - [Toggle navigation on mobile](#toggle-navigation-on-mobile)
+    - [Documentation references](#documentation-references)
+  - [Bind our todo lists to the side navigation](#bind-our-todo-lists-to-the-side-navigation)
+    - [Documentation references](#documentation-references)
+  - [Main section](#main-section)
+    - [Header](#header)
+    - [Todos](#todos)
+    - [Documentation references](#documentation-references)
+  - [Change current list](#change-current-list)
+  - [Create a new list](#create-a-new-list)
+    - [Toggle the sidebar](#toggle-the-sidebar)
+    - [Add the new list](#add-the-new-list)
+    - [Documentation references](#documentation-references)
+  - [Edit a list](#edit-a-list)
+    - [Toggle sidebar content](#toggle-sidebar-content)
+    - [Edit list form](#edit-list-form)
+      - [Delete a list](#delete-a-list)
+      - [Change the title and keyword value](#change-the-title-and-keyword-value)
+    - [Documentation references](#documentation-references)
+  - [Create and edit a todo](#create-and-edit-a-todo)
+      - [Create a todo](#create-a-todo)
+      - [Edit a todo](#edit-a-todo)
+  - [LocalStorage](#localstorage)
+    - [Documentation references](#documentation-references)
+- [Bonus - Offline Progressive Web App (PWA)](#bonus---offline-progressive-web-app-pwa)
+  - [Set up a PWA](#set-up-a-pwa)
+    - [Generate icon assets](#generate-icon-assets)
+    - [Web App Manifest](#web-app-manifest)
+    - [Service workers](#service-workers)
 
 ## Getting started
 
 Clone the [starter materials from github](https://github.com/vinceumo/vue-101-damdigital-workshop). It includes the base HTML, CSS and JS.
 
-The final version of this tutorial can be found on [this repo](#)
+You can find the final code of this tutorial on [github](https://github.com/vinceumo/todo), and the demo if you follow this [link](http://vinceumo.github.io/todo).
 
 Vue CDN is already included in our index.html, as well as our CSS and content/js/app.js 😃.
 
@@ -352,11 +366,11 @@ We are going to create a **method** called `addNewList`. A **method** is a funct
 Our `addNewList` method will follow this scenario:
 
 1.  If _title_ is empty use a default string of `"🕵️‍ List with no name"`
-1.  If _keyword_ is empty use a default string of `""earth"`
-1.  Push our values to `todoLists`
-1.  Change our current list to our new list
-1.  Close the sidebar
-1.  Reset the values of our inputs
+2.  If _keyword_ is empty use a default string of `""earth"`
+3.  Push our values to `todoLists`
+4.  Change our current list to our new list
+5.  Close the sidebar
+6.  Reset the values of our inputs
 
 ```js
 var app = new Vue({
@@ -919,5 +933,5 @@ Then we only have to follow this gist and add the parts **Listen to installation
 This tutorial is now finally done. Our **todo vue.js PWA** can now be access here https://vinceumo.github.io/todo
 
 TODO
-- Get screen shoots
+- Get screenshoots
 - Create material starter pack
