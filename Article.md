@@ -22,6 +22,10 @@ Here are the subjects this tutorial will cover:
 - v-else
 - Introduction to PWA
 
+We are going to create a todo application with the ability to have multiple lists of todos.
+
+![todo app screenshot](https://image.ibb.co/g3g8Gy/Screenshot_2018_07_17_Todo_list.png)
+
 ## Table of Contents
 
 - [Vue.js 101 todo PWA tutorial](#vuejs-101-todo-pwa-tutorial)
@@ -69,6 +73,8 @@ Vue CDN is already included in our index.html, as well as our CSS and content/js
 
 We are going to show and hide the side navigation on mobile (📱 < 850px).
 
+![toggle nav](https://image.ibb.co/c7qGmy/menu.gif)
+
 When we click on **Menu** we want `<nav>` to toggle the class `.is-open`.
 
 To do so we are going to use `v-bind` in our markup. `v-bind` allow us to bind data inside an html attribute. E.g. `v-bind:id=""`, `v-bind:style=""`, `v-bind:data-target=""`, etc. The shorthand for `v-bind` is `:`.
@@ -81,7 +87,7 @@ In `index.html`, we are going to dynamically pass `.is-open` using `v-bind:class
 </nav>
 ```
 
-In `content/js/app.js`, we are going to had `isNavOpen` to our data. If you change our data to **true** the nav will show up.
+In `content/js/app.js`, we are going to had `isNavOpen` in our data. If you change our data to **true** the nav will show up.
 
 The **data** property in vue.js is where we store the data of our application but as well the state of our UI. For example, if _isNavOpen_ is by default set to false but by changing its value to true we can bind the class _is-open_ to the DOM.
 
@@ -264,7 +270,7 @@ The `v-model` directive creates a two-way data bindings meaning when the value g
 
 We want to be able to change the current list being displayed. The current list being displayed is set by `currentListIndex` in our app's data. When we click on one of the list items we want to change `currentListIndex` to the index of this one and close the side navigation if open.
 
-We want as well, to show the user the current list behind display, to do so we are going to add the class `.is-active` if `currentListIndex === index`
+We want as well, to show the user the current list behind displayed, to do so we are going to add the class `.is-active` if `currentListIndex === index`
 
 ```html
 <li v-for="(todoList, index) in todoLists"  v-bind:class="{'is-active' : currentListIndex === index}">
@@ -361,7 +367,7 @@ Now we are going to bind our inputs using `v-model`.
 
 Alright, now lets push our new `tempNewList` values to `todoLists`.
 
-We are going to create a **method** called `addNewList`. A **method** is a function stored as an object property. Here the object is the vue instance. In vue our method will be stored in a `methods` object.
+We are going to create a **method** called `addNewList`. A **method** is a function stored as an object property. Here the object is the vue instance. In vue, our method will be stored in a `methods` object.
 
 Our `addNewList` method will follow this scenario:
 
@@ -659,7 +665,7 @@ totalTodosCompleted: function(i){
 }
 ```
 
-And now in our `navigation` we are going to use our new method to return the total of completed todos.
+And now in our `navigation`, we are going to use our new method to return the total of completed todos.
 
 ```html
 <li v-for="(todoList, index) in todoLists" v-bind:class="{'is-active' : currentListIndex === index}">
@@ -746,7 +752,7 @@ We are using `setItem()` method from the Web Storage API. We pass the following 
   - `keyName`: name of the key we want to create/update (`'todoLocalStorage'`).
   - `keyValue`: value we want to give the key you are creating/updating (`JSON.stringify(this.todoLists)`).
 
-We want now to use this method every time we update the values of our todos or lists. Vue allow us to react to data changes with the `watch` option. Every time with have a change in our `todoLists` we want to call our `updateTodoLocalStorage` method. As our object have nested values, we want to detect changes inside this values. We can pass `deep: true` to do so.
+We want now to use this method every time we update the values of our todos or lists. Vue allows us to react to data changes with the `watch` option. Every time we have a change in our `todoLists` we want to call our `updateTodoLocalStorage` method. As our object has nested values, we want to detect changes inside this values. We can pass `deep: true` to do so.
 
 ```js
 var app = new Vue({
@@ -771,9 +777,9 @@ var app = new Vue({
 });
 ```
 
-Now lets inspect our app and look into **Local Storage**. If we create/update a list or a todo we can see our `todoLocalStorage` storage being updated.
+Now let's inspect our app and look into **Local Storage**. If we create/update a list or a todo we can see our `todoLocalStorage` storage is updated.
 
-Now, when we load our page, we want to set our `todoLists` as our `todoLocalStorage`. Vue comes with a some [Lifecycle Hooks](https://vuejs.org/v2/api/#created). We re going to use the `created: function()` one to set our values. We are going as well to remove our dummy values.
+Now, when we load our page, we want to set our `todoLists` as our `todoLocalStorage`. Vue comes with a some [Lifecycle Hooks](https://vuejs.org/v2/api/#created). We are going to use the `created: function()` one to set our values. We are going as well to remove our dummy values.
 
 ```js
 var app = new Vue({
@@ -805,7 +811,7 @@ Now if we reload, close and reopen our app all our todos and list have been save
 
 # Bonus - Offline Progressive Web App (PWA)
 
-In this bonus part of this tutorial we are going to set up a Progressive Web App (PWA) and our services workers so we can use this web application offline on our smartphone.
+In this bonus part of this tutorial, we are going to set up a Progressive Web App (PWA) and our services workers so we can use this web application offline on our smartphone.
 
 ## Set up a PWA
 
@@ -813,7 +819,7 @@ A PWA is:
 
 > Progressive Web Apps are web applications that are regular web pages or websites, but can appear to the user like traditional applications or native mobile applications. The application type attempts to combine features offered by most modern browsers with the benefits of a mobile experience. _[wikipedia](https://en.wikipedia.org/wiki/Progressive_Web_Apps)_
 
-It is basically a web app that take advantages of the latest technologies to act and look like a native app.
+It is basically a web app that takes advantages of the latest technologies to act and look like a native app.
 
 To set up our PWA we will need to create a `manifest.json` file and set up our service workers.
 
@@ -824,7 +830,7 @@ PWA must be served from a secure origin (HTTPS).
 
 ### Generate icon assets
 
-First we are going to include all the icon assets in our project. The icons have already been generated using https://realfavicongenerator.net/. They are included in `content/img/`.
+First, we are going to include all the icon assets in our project. The icons have already been generated using https://realfavicongenerator.net/. They are included in `content/img/`.
 
 In the head of our HTML we want to include:
 
@@ -841,7 +847,7 @@ In the head of our HTML we want to include:
 
 ### Web App Manifest
 
-Web App Manifest (manifest.json) is basically a file that provides information about our web app such as icons, name of our application, etc. It is part of the technologies used for PWAs. You can get more information about the Web App Manifest on [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/Manifest).
+Web App Manifest (manifest.json) is basically a file that provides information about our web app such as icons, the name of our application, etc. It is part of the technologies used for PWAs. You can get more information about the Web App Manifest on [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/Manifest).
 
 Now let's create this file at the root of our project.
 
@@ -872,7 +878,7 @@ Now let's create this file at the root of our project.
 }
 ```
 
-In our HTML file we want to include it.
+In our HTML file, we want to include it.
 
 ```html
 <link rel="manifest" href="manifest.json">
@@ -884,7 +890,7 @@ What are service workers?
 
 > Service workers are a new browser feature that provide event-driven scripts that run independently of web pages. Unlike other workers, service workers can be shut down at the end of events, note the lack of retained references from documents, and they have access to domain-wide events such as network fetches. Service workers also have scriptable caches. Along with the ability to respond to network requests from certain web pages via script, this provides a way for applications to “go offline”. _[w3c/ServiceWorker - Github](https://github.com/w3c/ServiceWorker)_
 
-This tutorial do not aim to go into depth about service workers, you can find some great tutorial and resources online:
+This tutorial does not aim to go into depth about service workers, you can find some great tutorial and resources online:
 
 - [How to Setup a Basic Service Worker (with Caching) - bitsofcode (Video)](https://www.youtube.com/watch?v=BfL3pprhnms)
 - [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/)
@@ -898,7 +904,7 @@ https://gist.github.com/Omranic/4e648fa38caab7b8207d3e237fde0c77#create-service-
 
 For our services workers we are going to follow this [gist from Omranic](https://gist.github.com/Omranic/4e648fa38caab7b8207d3e237fde0c77#create-service-worker)
 
-First create a `sw.js` file at the root of our project.
+First, create a `sw.js` file at the root of our project.
 
 In our **index.html**
 
@@ -915,23 +921,24 @@ In our **index.html**
 Then in our **sw.js** we are going to cache all our assets that will allow our app to be usable offline:
 
 ```js
-var shellCacheName = 'pwa-todo-v1';
+var shellCacheName = "pwa-todo-v1";
 var filesToCache = [
-  './',
-  './index.html',
-  './content/css/screen.min.css',
-  './content/js/app.js',
-  'https://cdn.jsdelivr.net/npm/vue',
-  'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css'
+  "./",
+  "./index.html",
+  "./content/css/screen.min.css",
+  "./content/js/app.js",
+  "https://cdn.jsdelivr.net/npm/vue",
+  "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css"
 ];
 ```
 
 Then we only have to follow this gist and add the parts **Listen to installation event**, **Update Assets Cache** and **Serve App Shell Offline From Cache**.
 
----------
+---
 
-This tutorial is now finally done. Our **todo vue.js PWA** can now be access here https://vinceumo.github.io/todo
+This tutorial is now finally done. Our **todo vue.js PWA** can now be accessed here https://vinceumo.github.io/todo
 
-TODO
-- Get screenshoots
-- Create material starter pack
+---
+
+- [@vince_umo](https://twitter.com/vince_umo)
+- [vincent-humeau.com](http://vincent-humeau.com/)
