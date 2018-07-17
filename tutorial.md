@@ -71,15 +71,15 @@ Vue CDN is already included in our index.html, as well as our CSS and content/js
 
 ## Toggle navigation on mobile
 
-We are going to show and hide the side navigation on mobile (📱 < 850px).
+First thing first, the side navigation on mobile (📱 < 850px) should show and hide.
 
 ![toggle nav](https://image.ibb.co/c7qGmy/menu.gif)
 
 When we click on **Menu** we want `<nav>` to toggle the class `.is-open`.
 
-To do so we are going to use `v-bind` in our markup. `v-bind` allow us to bind data inside an html attribute. E.g. `v-bind:id=""`, `v-bind:style=""`, `v-bind:data-target=""`, etc. The shorthand for `v-bind` is `:`.
+In vue.js `v-bind` allow us to bind data inside an html attribute. E.g. `v-bind:id=""`, `v-bind:style=""`, `v-bind:data-target=""`, etc. The shorthand for `v-bind` is `:`.
 
-In `index.html`, we are going to dynamically pass `.is-open` using `v-bind:class`. If `isNavOpen` is true, then we will add our class.
+In `index.html`, `.is-open` will be dynamically pass using `v-bind:class`. If `isNavOpen` is true, then we will add our class.
 
 ```html
 <nav v-bind:class="{'is-open': isNavOpen}">
@@ -87,11 +87,11 @@ In `index.html`, we are going to dynamically pass `.is-open` using `v-bind:class
 </nav>
 ```
 
-In `content/js/app.js`, we are going to had `isNavOpen` in our data. If you change our data to **true** the nav will show up.
+In `content/js/app.js`, we need `isNavOpen` in our data. If you change the value of this last one to **true**, the nav will show up.
 
-The **data** property in vue.js is where we store the data of our application but as well the state of our UI. For example, if _isNavOpen_ is by default set to false but by changing its value to true we can bind the class _is-open_ to the DOM.
+The **data** property in vue.js is where we store the data of our application but as well the state of our UI. For example, `isNavOpen` is by default set to false but by changing its value to true we can bind the class _is-open_ to the DOM.
 
-We are going to add `isNavOpen: false` to our app.js.
+In our app.js we need to add `isNavOpen: false`.
 
 ```javascript
 var app = new Vue({
@@ -121,7 +121,7 @@ As you can see we can pass an inline javascript statement, we can as well use a 
 
 ## Bind our todo lists to the side navigation
 
-In `content/js/app.js`, we are going to add some dummy lists so we can start to integrate our side navigation.
+In `content/js/app.js`, let's add some dummy lists so we can start to integrate our side navigation.
 
 ```javascript
 var app = new Vue({
@@ -161,7 +161,7 @@ var app = new Vue({
 });
 ```
 
-Now we are going to use the `v-for` directive in our markup to render the todo lists in the side navigation.
+To render our lists in the side navigation, we need use the `v-for` directive.
 
 ```html
 <nav v-bind:class="{'is-open': isNavOpen}">
@@ -196,7 +196,7 @@ We are using the 'moustache' syntax `{{}}` to bind our text to the view. The mou
 
 Now we want to be able to see our todos in the main section. For now, we will only render the first `todoLists` list (index 0).
 
-In `content/js/app.js` in `data` we are going to add `currentListIndex: 0`
+In `content/js/app.js` => `data` add `currentListIndex: 0`.
 
 ```javascript
 var app = new Vue({
@@ -211,7 +211,7 @@ var app = new Vue({
 });
 ```
 
-First, we are going to bind the title of the list using the moustache syntax in the header.
+First, we will bind the title of the list using the moustache syntax in the header.
 
 ```html
 <h1>{{todoLists[currentListIndex].title}}</h1>
@@ -223,7 +223,7 @@ The header has a background image. We are using [Unsplash Source](https://source
 https://source.unsplash.com/featured/?{KEYWORD},{KEYWORD}
 ```
 
-As we are going to bind our keyword inside an attribute we are going to use `v-bind`:
+As we bind our keyword inside an attribute, we are using `v-bind`:
 
 ```html
 <header v-bind:style="'background-image: url(https://source.unsplash.com/featured/?' + todoLists[currentListIndex].keyword + ')'">
@@ -233,9 +233,41 @@ As we are going to bind our keyword inside an attribute we are going to use `v-b
 
 ### Todos
 
-To render our todos in the main section we are going to use `v-for`. As we want an individual ID and names for each input we are going to pass the index in our for loop `v-for="(value, index) in object"`.
+To render our todos in the main section we will need agin to use `v-for`. As we want an individual ID and names for each input we are going to pass the index in our for loop `v-for="(value, index) in object"`.
 
-We are going to use `v-bind` to checked our todos if these ones are already checked.
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+We are going to use `v-bind` to check our todos if these ones are already checked.
 
 We are using `v-model` to update the value of `isCompleted` from our todos when we click on the checkbox. When our checkbox is checked isCompleted will get the value of true and the parent `li` will automatically get the class `is-completed` as isCompleted is `true`.
 
