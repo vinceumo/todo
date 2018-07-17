@@ -705,7 +705,7 @@ In our **editTodo** form we want to:
 </form>
 ```
 
-🎉🎉🎉🎉🎉 The UI of our todo is now done 
+🎉🎉🎉🎉🎉 The UI of our todo is now done
 
 ## LocalStorage
 
@@ -727,9 +727,9 @@ updateTodoLocalStorage: function () {
 
 We are using `setItem()` method from the Web Storage API. We pass the following parameters:
 
-* `setItem(keyName, keyValue);`
-  * `keyName`: name of the key we want to create/update (`'todoLocalStorage'`).
-  * `keyValue`: value we want to give the key you are creating/updating (`JSON.stringify(this.todoLists)`).
+- `setItem(keyName, keyValue);`
+  - `keyName`: name of the key we want to create/update (`'todoLocalStorage'`).
+  - `keyValue`: value we want to give the key you are creating/updating (`JSON.stringify(this.todoLists)`).
 
 We want now to use this method every time we update the values of our todos or lists. Vue allow us to react to data changes with the `watch` option. Every time with have a change in our `todoLists` we want to call our `updateTodoLocalStorage` method. As our object have nested values, we want to detect changes inside this values. We can pass `deep: true` to do so.
 
@@ -741,7 +741,7 @@ var app = new Vue({
   },
   watch: {
     todoLists: {
-      handler(){
+      handler() {
         this.updateTodoLocalStorage();
       },
       deep: true
@@ -749,8 +749,8 @@ var app = new Vue({
   },
   methods: {
     //...
-    updateTodoLocalStorage: function () {
-      localStorage.setItem('todoLocalStorage', JSON.stringify(this.todoLists));
+    updateTodoLocalStorage: function() {
+      localStorage.setItem("todoLocalStorage", JSON.stringify(this.todoLists));
     }
   }
 });
@@ -768,7 +768,9 @@ var app = new Vue({
     todoLists: []
   },
   created: function() {
-    this.todoLists = JSON.parse(localStorage.getItem('todoLocalStorage') || '[]');
+    this.todoLists = JSON.parse(
+      localStorage.getItem("todoLocalStorage") || "[]"
+    );
   },
   watch: {
     //...
@@ -788,11 +790,22 @@ Now if we reload, close and reopen our app all our todos and list have been save
 
 # Bonus - Offline Progressive Web App (PWA)
 
+In this bonus part of this tutorial we are going to set up a Progressive Web App (PWA) and our services workers so we can use this web application offline on our smartphone.
+
 ## Set up a PWA
 
-{What is PWA}
+A PWA is:
 
-### Generate icon assets 
+> Progressive Web Apps are web applications that are regular web pages or websites, but can appear to the user like traditional applications or native mobile applications. The application type attempts to combine features offered by most modern browsers with the benefits of a mobile experience. _[wikipedia](https://en.wikipedia.org/wiki/Progressive_Web_Apps)_
+
+It is basically a web app that take advantages of the latest technologies to act and look like a native app.
+
+To set up our PWA we will need to create a `manifest.json` file and set up our service workers.
+
+- [A Beginner's Guide To Progressive Web Apps](https://www.smashingmagazine.com/2016/08/a-beginners-guide-to-progressive-web-apps/)
+- [Progressive Web Apps - Google](https://duckduckgo.com/?q=progressive+web+app+definition&t=ffab&atb=v123-1&ia=about)
+
+### Generate icon assets
 
 First we are going to include all the icon assets in our project. The icons have already been generated using https://realfavicongenerator.net/. They are included in `content/img/`.
 
@@ -809,24 +822,16 @@ In the head of our HTML we want to include:
 <meta name="theme-color" content="#77c4d3">
 ```
 
-### Manifest
+### Web App Manifest
 
-{What is a manifest}
+Web App Manifest (manifest.json) is basically a file that provides information about our web app such as icons, name of our application, etc. It is part of the technologies used for PWAs. You can get more information about the Web App Manifest on [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/Manifest).
 
-Now let's create a `manifest.json` file at the root of our project.
-
-In our HTML file we want to include it.
-
-```html
-<link rel="manifest" href="manifest.json">
-```
+Now let's create this file at the root of our project.
 
 ```json
 {
-  "manifest_version": 2,
   "name": "todo",
   "short_name": "todo",
-  "version": "1",
   "author": "Vincent Humeau",
   "lang": "en-GB",
   "icons": [
@@ -843,10 +848,17 @@ In our HTML file we want to include it.
   ],
   "theme_color": "#77c4d3",
   "background_color": "#77c4d3",
+  "display": "standalone",
   "orientation": "portrait",
   "scope": "/todo/",
   "start_url": "/todo/"
 }
+```
+
+In our HTML file we want to include it.
+
+```html
+<link rel="manifest" href="manifest.json">
 ```
 
 ### Service workers
@@ -871,10 +883,8 @@ In our **index.html**
 
 {SW}
 
-
 TODO
 
-- update layout on mobile o list cta are bigger
 - Input text to be biggers
 - Get screen shoots
 - Create material starter pack

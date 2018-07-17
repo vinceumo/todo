@@ -1,8 +1,6 @@
 {
-  "manifest_version": 2,
   "name": "todo",
   "short_name": "todo",
-  "version": "1",
   "author": "Vincent Humeau",
   "lang": "en-GB",
   "icons": [
