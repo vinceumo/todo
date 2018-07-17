@@ -1,6 +1,6 @@
-# Vue 101 todo tutorial
+# Vue.js 101 todo PWA tutorial
 
-The goal of this tutorial is to give an introduction to vue.js ❤.
+The goal of this tutorial is to give an introduction to vue.js ❤. It was initially written for a workshop for [DAMDigital London](https://www.damdigital.com/).
 
 Vue.js is a progressive framework for building user interfaces.
 
@@ -20,6 +20,7 @@ Here are the subjects this tutorial will cover:
 - Conditional Rendering
 - v-if
 - v-else
+- Introduction to PWA
 
 ## Table of Contents
 
@@ -802,6 +803,8 @@ It is basically a web app that take advantages of the latest technologies to act
 
 To set up our PWA we will need to create a `manifest.json` file and set up our service workers.
 
+PWA must be served from a secure origin (HTTPS).
+
 - [A Beginner's Guide To Progressive Web Apps](https://www.smashingmagazine.com/2016/08/a-beginners-guide-to-progressive-web-apps/)
 - [Progressive Web Apps - Google](https://duckduckgo.com/?q=progressive+web+app+definition&t=ffab&atb=v123-1&ia=about)
 
@@ -863,9 +866,23 @@ In our HTML file we want to include it.
 
 ### Service workers
 
-{What is a sw}
+What are service workers?
+
+> Service workers are a new browser feature that provide event-driven scripts that run independently of web pages. Unlike other workers, service workers can be shut down at the end of events, note the lack of retained references from documents, and they have access to domain-wide events such as network fetches. Service workers also have scriptable caches. Along with the ability to respond to network requests from certain web pages via script, this provides a way for applications to “go offline”. _[w3c/ServiceWorker - Github](https://github.com/w3c/ServiceWorker)_
+
+This tutorial do not aim to go into depth about service workers, you can find some great tutorial and resources online:
+
+- [How to Setup a Basic Service Worker (with Caching) - bitsofcode (Video)](https://www.youtube.com/watch?v=BfL3pprhnms)
+- [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/)
+- [pwabuilder - service workers](https://www.pwabuilder.com/serviceworker)
+- [pwabuilder - service workers](https://www.pwabuilder.com/serviceworker)
+- [Lighthouse](https://developers.google.com/web/tools/lighthouse/)
+- [Making a Simple Site Work Offline with ServiceWorker](https://css-tricks.com/serviceworker-for-offline/)
+- [Getting Started with Service Workers](https://www.sitepoint.com/getting-started-with-service-workers/)
 
 https://gist.github.com/Omranic/4e648fa38caab7b8207d3e237fde0c77#create-service-worker
+
+For our services workers we are going to follow this [gist from Omranic](https://gist.github.com/Omranic/4e648fa38caab7b8207d3e237fde0c77#create-service-worker)
 
 First create a `sw.js` file at the root of our project.
 
@@ -881,11 +898,26 @@ In our **index.html**
 </script>
 ```
 
-{SW}
+Then in our **sw.js** we are going to cache all our assets that will allow our app to be usable offline:
+
+```js
+var shellCacheName = 'pwa-todo-v1';
+var filesToCache = [
+  './',
+  './index.html',
+  './content/css/screen.min.css',
+  './content/js/app.js',
+  'https://cdn.jsdelivr.net/npm/vue',
+  'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css'
+];
+```
+
+Then we only have to follow this gist and add the parts **Listen to installation event**, **Update Assets Cache** and **Serve App Shell Offline From Cache**.
+
+---------
+
+This tutorial is now finally done. Our **todo vue.js PWA** can now be access here https://vinceumo.github.io/todo
 
 TODO
-
-- Input text to be biggers
 - Get screen shoots
 - Create material starter pack
-- Dam digital paragraph
