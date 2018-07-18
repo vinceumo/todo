@@ -81,7 +81,7 @@ When we click on **Menu** we want `<nav>` to toggle the class `.is-open`.
 
 In vue.js, `v-bind` allow us to bind data inside an html attribute. E.g. `v-bind:id=""`, `v-bind:style=""`, `v-bind:data-target=""`, etc. The shorthand for `v-bind` is `:`.
 
-In `index.html`, `.is-open` will be dynamically pass using `v-bind:class`. If `isNavOpen` is true, then we will add our class.
+In `index.html`, we will dynamically pass `.is-open` using `v-bind:class`. If `isNavOpen` is true, then we will add our class.
 
 ```html
 <nav v-bind:class="{'is-open': isNavOpen}">
@@ -112,7 +112,7 @@ We are going to use the event handler 'on click'. In vue.js, we can use `v-on:` 
 <button v-on:click="isNavOpen = !isNavOpen" class="menu">Menu</button>
 ```
 
-As you can see we can pass an inline javascript statement, we can as well use a method (function), we will see later in this tutorial how to use this last one.
+As you can see, we can pass an inline javascript statement, we can as well use a method (function), we will see later in this tutorial how to use this last one.
 
 ### Documentation references
 
@@ -237,9 +237,9 @@ As we bind our keyword inside an attribute, we are using `v-bind`:
 
 To render our todos in the main section, we will need to use `v-for`. As we want an individual ID and names for each input we are passing the index in our for loop `v-for="(value, index) in object"`.
 
-We use `v-bind` to _check/tick_ our todos if these ones are already checked.
+We use `v-bind` to _check/tick_ our todos` inputs if these ones are already checked.
 
-We are using `v-model` to update the value of `isCompleted` from our todos when we click on the checkbox. When our checkbox is checked, isCompleted will get the value of true and the parent `li` will automatically get the class `is-completed` as isCompleted is `true`.
+We are using `v-model` to update the value of `isCompleted` from our todos when we click on the checkbox. When our checkbox is checked, isCompleted will get the value of true and the parent `li` will automatically get the class `.is-completed` as isCompleted is `true`.
 
 The `v-model` directive creates a two-way data bindings, meaning when the value gets updated the UI will be updated as well.
 
@@ -270,9 +270,9 @@ The `v-model` directive creates a two-way data bindings, meaning when the value 
 
 ## Change current list
 
-We want to be able to change the current list being displayed. The current list being displayed is set by `currentListIndex` in our app's data. When we click on one of the list items we want to change `currentListIndex` to the index of this one and close the side navigation if open.
+We want to be able to change the current list being displayed. This one is set by `currentListIndex` in our app's data. When we click on one of the list items we want to change `currentListIndex` to the index of this one and close the side navigation if open.
 
-We need as well, to show the user the current list being displayed, to do so, we are adding the class `.is-active` if `currentListIndex === index`
+We need as well, to show the user the current list being displayed, to do so, we are adding the class `.is-active` if `currentListIndex === index`.
 
 ```html
 <li v-for="(todoList, index) in todoLists"  v-bind:class="{'is-active' : currentListIndex === index}">
@@ -367,14 +367,14 @@ Now we will bind our inputs using `v-model`.
 </form>
 ```
 
-Alright, now lets push our new `tempNewList` values to `todoLists`.
+Alright, now let's push our new `tempNewList` values to `todoLists`.
 
 Create a **method** called `addNewList`. A **method** is a function stored as an object property. Here the object is the vue instance. In vue, our method will be stored in a `methods` object.
 
 `addNewList` method will follow this scenario:
 
 1.  If _title_ is empty, use a default string of `"🕵️‍ List with no name"`
-2.  If _keyword_ is empty, use a default string of `""earth"`
+2.  If _keyword_ is empty, use a default string of `"earth"`
 3.  Push our values to `todoLists`
 4.  Change our current list to our new list
 5.  Close the sidebar
@@ -430,7 +430,7 @@ Create a new method `openSidebar`. This one will:
 
 1.  Open the sidebar
 2.  Show the form that we want to use
-3.  close the navigation if this one is open
+3.  Close the navigation if this one is open
 
 In data, let's add `sidebarContentToShow: null`, This will allow us to know what form should be shown.
 
@@ -519,7 +519,7 @@ And ta-dah we are now rendering the **create a new list form**. As you may have 
 
 #### Delete a list
 
-We are going to start with the **delete list** button. Create a new method, `deleteList`. It will remove the currently shown list and show the first one.
+We are going to start with the **delete list** button. Create a new method called `deleteList`. It will remove the currently shown list and show the first one.
 
 ```js
 //...
@@ -775,7 +775,7 @@ var app = new Vue({
 });
 ```
 
-Now let's inspect our app and look into **Local Storage**. If we create/update a list or a todo we can see our `todoLocalStorage` storage being updated.
+Now let's inspect our app and look into **Local Storage**. If we create/update a list or a todo, we can see our `todoLocalStorage` storage being updated.
 
 Now, when we load our page, we need to set our `todoLists` as our `todoLocalStorage`. Vue comes with [Lifecycle Hooks](https://vuejs.org/v2/api/#created). We will use the `created: function()` one to set our values. We are going, as well, to remove our dummy values.
 
@@ -897,7 +897,6 @@ This tutorial does not aim to go in depth about service workers, you can find so
 - [Lighthouse](https://developers.google.com/web/tools/lighthouse/)
 - [Making a Simple Site Work Offline with ServiceWorker](https://css-tricks.com/serviceworker-for-offline/)
 - [Getting Started with Service Workers](https://www.sitepoint.com/getting-started-with-service-workers/)
-
 
 For our services workers we are using this [gist from Omranic](https://gist.github.com/Omranic/4e648fa38caab7b8207d3e237fde0c77#create-service-worker)
 
