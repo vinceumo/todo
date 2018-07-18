@@ -1,16 +1,18 @@
 # Vue.js 101 todo PWA tutorial
 
-The goal of this tutorial is to give an introduction to vue.js ❤. It was initially written for a workshop for [DAMDigital London](https://www.damdigital.com/).
+The goal of this tutorial is to give an introduction to vue.js ❤.
 
-Vue.js is a progressive framework for building user interfaces.
+This content was initially written for a workshop for [DAMDigital London](https://www.damdigital.com/).
 
-This tutorial assumes that you already have some intermediate knowledge about HTML, CSS and Javascript. If you don't have any knowledge of these fields check out [freeCodeCamp](https://www.freecodecamp.org/), they have great resources to learn these topics 😉.
+Vue.js is a progressive framework for building user interfaces (UI).
+
+This tutorial assumes that you already have some intermediate knowledge about HTML, CSS and Javascript. If you don't have any knowledge of these fields, check out [freeCodeCamp](https://www.freecodecamp.org/), they have great resources to learn these topics 😉.
 
 Here are the subjects this tutorial will cover:
 
+- v-bind directive
 - Class and Style Bindings
 - Event Handling
-- v-bind directive
 - Data binding in attributes
 - List Rendering
 - Interpolations - Mustache
@@ -45,7 +47,7 @@ We are going to create a todo application with the ability to have multiple list
     - [Add the new list](#add-the-new-list)
     - [Documentation references](#documentation-references)
   - [Edit a list](#edit-a-list)
-    - [Toggle sidebar content](#toggle-sidebar-content)
+    - [Toggle the sidebar content](#toggle-the-sidebar-content)
     - [Edit list form](#edit-list-form)
       - [Delete a list](#delete-a-list)
       - [Change the title and keyword value](#change-the-title-and-keyword-value)
@@ -63,7 +65,7 @@ We are going to create a todo application with the ability to have multiple list
 
 ## Getting started
 
-Clone the [starter materials from github](https://github.com/vinceumo/vue-101-damdigital-workshop). It includes the base HTML, CSS and JS.
+Clone the [starter materials from github](https://github.com/vinceumo/todo-vue-starter-materials). It includes the base HTML, CSS and JS.
 
 You can find the final code of this tutorial on [github](https://github.com/vinceumo/todo), and the demo if you follow this [link](http://vinceumo.github.io/todo).
 
@@ -77,7 +79,7 @@ First thing first, the side navigation on mobile (📱 < 850px) should show and 
 
 When we click on **Menu** we want `<nav>` to toggle the class `.is-open`.
 
-In vue.js `v-bind` allow us to bind data inside an html attribute. E.g. `v-bind:id=""`, `v-bind:style=""`, `v-bind:data-target=""`, etc. The shorthand for `v-bind` is `:`.
+In vue.js, `v-bind` allow us to bind data inside an html attribute. E.g. `v-bind:id=""`, `v-bind:style=""`, `v-bind:data-target=""`, etc. The shorthand for `v-bind` is `:`.
 
 In `index.html`, `.is-open` will be dynamically pass using `v-bind:class`. If `isNavOpen` is true, then we will add our class.
 
@@ -89,9 +91,9 @@ In `index.html`, `.is-open` will be dynamically pass using `v-bind:class`. If `i
 
 In `content/js/app.js`, we need `isNavOpen` in our data. If you change the value of this last one to **true**, the nav will show up.
 
-The **data** property in vue.js is where we store the data of our application but as well the state of our UI. For example, `isNavOpen` is by default set to false but by changing its value to true we can bind the class _is-open_ to the DOM.
+The **data** property in vue.js is where we store the data of our application but as well the state of our UI. For example, `isNavOpen` is by default set to false, but by changing its value to true, we can bind the class _is-open_ to the DOM.
 
-In our app.js we need to add `isNavOpen: false`.
+In our app.js, we need to add `isNavOpen: false`.
 
 ```javascript
 var app = new Vue({
@@ -104,7 +106,7 @@ var app = new Vue({
 
 Now we want to change the value of `isNavOpen` when we click on the **Menu** button.
 
-We are going to use the event handler 'on click'. In vue.js we can use `v-on:`, or `@` (Shorthands) to listen to DOM events. In our case, we want to listen to a click event. We are then going to use `v-on:click`/`@click`.
+We are going to use the event handler 'on click'. In vue.js, we can use `v-on:` or `@` (Shorthands), to listen to DOM events. In our case, we want to listen to a click event. We are then going to use `v-on:click`/`@click`.
 
 ```html
 <button v-on:click="isNavOpen = !isNavOpen" class="menu">Menu</button>
@@ -161,7 +163,7 @@ var app = new Vue({
 });
 ```
 
-To render our lists in the side navigation, we need use the `v-for` directive.
+To render our lists in the side navigation, we need to use the `v-for` directive.
 
 ```html
 <nav v-bind:class="{'is-open': isNavOpen}">
@@ -194,7 +196,7 @@ We are using the 'moustache' syntax `{{}}` to bind our text to the view. The mou
 
 ### Header
 
-Now we want to be able to see our todos in the main section. For now, we will only render the first `todoLists` list (index 0).
+We want to be able to see our todos in the main section. For now, we will only render the first `todoLists` list (index 0).
 
 In `content/js/app.js` => `data` add `currentListIndex: 0`.
 
@@ -211,7 +213,7 @@ var app = new Vue({
 });
 ```
 
-First, we will bind the title of the list using the moustache syntax in the header.
+Bind the title of the list using the moustache syntax in the header.
 
 ```html
 <h1>{{todoLists[currentListIndex].title}}</h1>
@@ -233,45 +235,13 @@ As we bind our keyword inside an attribute, we are using `v-bind`:
 
 ### Todos
 
-To render our todos in the main section we will need agin to use `v-for`. As we want an individual ID and names for each input we are going to pass the index in our for loop `v-for="(value, index) in object"`.
+To render our todos in the main section, we will need to use `v-for`. As we want an individual ID and names for each input we are passing the index in our for loop `v-for="(value, index) in object"`.
 
-<!--
+We use `v-bind` to _check/tick_ our todos if these ones are already checked.
 
+We are using `v-model` to update the value of `isCompleted` from our todos when we click on the checkbox. When our checkbox is checked, isCompleted will get the value of true and the parent `li` will automatically get the class `is-completed` as isCompleted is `true`.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- -->
-
-We are going to use `v-bind` to check our todos if these ones are already checked.
-
-We are using `v-model` to update the value of `isCompleted` from our todos when we click on the checkbox. When our checkbox is checked isCompleted will get the value of true and the parent `li` will automatically get the class `is-completed` as isCompleted is `true`.
-
-The `v-model` directive creates a two-way data bindings meaning when the value gets updated the UI will be updated as well.
+The `v-model` directive creates a two-way data bindings, meaning when the value gets updated the UI will be updated as well.
 
 ```html
 <ul>
@@ -302,7 +272,7 @@ The `v-model` directive creates a two-way data bindings meaning when the value g
 
 We want to be able to change the current list being displayed. The current list being displayed is set by `currentListIndex` in our app's data. When we click on one of the list items we want to change `currentListIndex` to the index of this one and close the side navigation if open.
 
-We want as well, to show the user the current list behind displayed, to do so we are going to add the class `.is-active` if `currentListIndex === index`
+We need as well, to show the user the current list being displayed, to do so, we are adding the class `.is-active` if `currentListIndex === index`
 
 ```html
 <li v-for="(todoList, index) in todoLists"  v-bind:class="{'is-active' : currentListIndex === index}">
@@ -319,9 +289,9 @@ We want as well, to show the user the current list behind displayed, to do so we
 
 ### Toggle the sidebar
 
-When clicking on **Create a new list** we want to show the `.sidebar`. To do so we want to add the class `.is-open` to this one, then close the nav bar if this one is open on mobile. The way to do this is quite similar to what we have done with the navigation on mobile.
+When clicking on **Create a new list**, we show the `.sidebar`. To do so we want to add the class `.is-open` to this one, then close the nav bar if this one is open on mobile. The way to do this is quite similar to what we have done with the navigation on mobile.
 
-In our data we are going to add a new entry of `isSidebarOpen: false`:
+In our data, we will first, add a new entry of `isSidebarOpen: false`:
 
 ```js
 var app = new Vue({
@@ -335,7 +305,7 @@ var app = new Vue({
 });
 ```
 
-Now we want to bind our class `.is-open` to our `.sidebar`:
+Now let's bind our class `.is-open` to our `.sidebar`:
 
 ```html
 <div class="sidebar" v-bind:class="{'is-open' : isSidebarOpen}">
@@ -343,7 +313,7 @@ Now we want to bind our class `.is-open` to our `.sidebar`:
 </div>
 ```
 
-We need to add on event handler on click on **Create a new list** that will open the sidebar and close the navigation on mobile:
+We need to add an event handler on click on **Create a new list**, that will open the sidebar and close the navigation on mobile:
 
 ```html
 <button class="is-add" v-on:click="isSidebarOpen = true; isNavOpen = false;">Create a new list</button>
@@ -351,7 +321,7 @@ We need to add on event handler on click on **Create a new list** that will open
 
 Nice, now we can open our sidebar 🎉.
 
-Now lets close the sidebar when we click on **cancel**:
+Now let's close the sidebar when we click on **cancel**:
 
 ```html
 <button type="button" class="is-danger" v-on:click="isSidebarOpen = false">Cancel</button>
@@ -359,9 +329,9 @@ Now lets close the sidebar when we click on **cancel**:
 
 ### Add the new list
 
-To create a new list we want to field the _title_ and _keyword_ inputs. When the user clicks on **Create List** we want to push our new values to `todoLists` in our data. If one of our input is empty we want a default text to show up.
+To create a new list, we need the values of the _title_ and _keyword_ inputs. When the user clicks on **Create List**, we will push our new values to `todoLists` in our data. If one of our input is empty we will show up a default value.
 
-In our _app.js_ we are going to add a `tempNewList` array, it will store the values of our inputs.
+In our _app.js_, add a `tempNewList` array, it will store the values of our inputs.
 
 ```js
 var app = new Vue({
@@ -381,7 +351,7 @@ var app = new Vue({
 });
 ```
 
-Now we are going to bind our inputs using `v-model`.
+Now we will bind our inputs using `v-model`.
 
 ```html
 <form>
@@ -399,12 +369,12 @@ Now we are going to bind our inputs using `v-model`.
 
 Alright, now lets push our new `tempNewList` values to `todoLists`.
 
-We are going to create a **method** called `addNewList`. A **method** is a function stored as an object property. Here the object is the vue instance. In vue, our method will be stored in a `methods` object.
+Create a **method** called `addNewList`. A **method** is a function stored as an object property. Here the object is the vue instance. In vue, our method will be stored in a `methods` object.
 
-Our `addNewList` method will follow this scenario:
+`addNewList` method will follow this scenario:
 
-1.  If _title_ is empty use a default string of `"🕵️‍ List with no name"`
-2.  If _keyword_ is empty use a default string of `""earth"`
+1.  If _title_ is empty, use a default string of `"🕵️‍ List with no name"`
+2.  If _keyword_ is empty, use a default string of `""earth"`
 3.  Push our values to `todoLists`
 4.  Change our current list to our new list
 5.  Close the sidebar
@@ -452,17 +422,17 @@ Finally, we are going to bind our method to our **Create list** button.
 
 ## Edit a list
 
-Good, now that we can create a new list we want to be able to edit existing ones. For now, we want to be able to change the title, the keyword and delete a list.
+Good, now that we can create a new list, we want the ability to edit existing ones. We will be able to edit the title, the keyword and delete a list.
 
-### Toggle sidebar content
+### Toggle the sidebar content
 
-First, we are going to create a new method `openSidebar`. This one will:
+Create a new method `openSidebar`. This one will:
 
 1.  Open the sidebar
 2.  Show the form that we want to use
 3.  close the navigation if this one is open
 
-In data lets add `sidebarContentToShow: null`, This will allow us to know what form should be shown.
+In data, let's add `sidebarContentToShow: null`, This will allow us to know what form should be shown.
 
 ```js
 var app = new Vue({
@@ -480,14 +450,14 @@ var app = new Vue({
 });
 ```
 
-We are going to have 4 forms in our sidebar that we will toggle:
+We have 4 forms in our sidebar that we will toggle:
 
 1.  `"createNewList"`
-1.  `"editList"`
-1.  `"createNewTodo"`
-1.  `"editTodo"`
+2.  `"editList"`
+3.  `"createNewTodo"`
+4.  `"editTodo"`
 
-In our HTML we will conditionally render our forms depending on the value of `sidebarContentToShow`. To do so we are using the `v-if` directive that will allow us to render our block if a condition is true. We need to uncomment our forms and add a `v-if` directive.
+In our HTML, we will conditionally render our forms depending on the value of `sidebarContentToShow`. To do so we are using the `v-if` directive. It will allow us to render our block if a condition is true. We need to uncomment our forms and add a `v-if` directive.
 
 ```html
 <div class="sidebar" v-bind:class="{'is-open' : isSidebarOpen}">
@@ -512,7 +482,7 @@ In our HTML we will conditionally render our forms depending on the value of `si
 </div>
 ```
 
-Now when we click on the **Create a new list** the sidebar appears and we see... Nothing 😱. That normal remember, `sidebarContentToShow` is set to null 😉.
+Now when we click on the **Create a new list**, the sidebar appears and we see... Nothing 😱. That normal remember, `sidebarContentToShow` is set to null 😉.
 
 To change the value of `sidebarContentToShow` we are going to create an `openSidebar` method that will open the sidebar and change the form that we want to show.
 
@@ -539,7 +509,7 @@ Now we can change **Create a new list** so we can use `openSidebar`
 <button class="is-add" v-on:click="openSidebar('createNewList')">Create a new list</button>
 ```
 
-And ta-dah we are now rendering the create a new list form. As you may have already guessed we are going to reuse our method with the **Edit list** button.
+And ta-dah we are now rendering the **create a new list form**. As you may have already guessed we will reuse our method with the **Edit list** button.
 
 ```html
 <button class="is-primary" v-on:click="openSidebar('editList')">Edit list</button>
@@ -549,7 +519,7 @@ And ta-dah we are now rendering the create a new list form. As you may have alre
 
 #### Delete a list
 
-We are going to start with the **delete list** button. We are going to create a new method, `deleteList`. It will remove the currently shown list and show the first one.
+We are going to start with the **delete list** button. Create a new method, `deleteList`. It will remove the currently shown list and show the first one.
 
 ```js
 //...
@@ -571,9 +541,7 @@ Now we can remove lists, but if we try to remove all lists we get an error and o
 [Vue warn]: Error in render: "TypeError: todoLists[currentListIndex] is undefined"
 ```
 
-As you might guess we have this error because our `todoLists` is empty and we still try to render some part of our application that relies on the values of `todoLists`. We are going to use to use conditional rendering `v-if` and `v-else`.
-
-We are going to render our main content only if `todoLists.length > 0` moreover we want the user to able to create a new list, we are going to use `v-else` to show an alternative main content that will help the user create a new list.
+As you might have guessed, we have this error because our `todoLists` is empty and we still try to render some part of our application that relies on the values of `todoLists`. We will use conditional rendering `v-if` and `v-else`, to fix this issue we will render our main content only if `todoLists.length > 0`. Moreover, we want the user to able to create a new list, we will use `v-else` to show an alternative main content that will help the user create a new list.
 
 ```html
 <main v-if="todoLists.length > 0">
@@ -591,10 +559,10 @@ We are going to render our main content only if `todoLists.length > 0` moreover 
 
 #### Change the title and keyword value
 
-Let's get back to our **editList** form. We are going to:
+Let's get back to our **editList** form. We want to:
 
 - Bind our inputs with the right `todoLists` element using `v-model`.
-- When we click on **done** we want to close our slider.
+- When we click on **done**, we want to close our slider.
 - Only want to render this form if `todoLists.length > 0`
 
 ```html
@@ -619,7 +587,7 @@ Let's get back to our **editList** form. We are going to:
 
 ## Create and edit a todo
 
-This tutorial is almost finished, in this last part we are going to create two features:
+The UI of our app is almost finished, we still need to:
 
 - Create a new todo in a list
 - Edit and delete an existing todo
@@ -628,7 +596,7 @@ Sound similar to what we have done with the lists right? It is going to be almos
 
 #### Create a todo
 
-In our data we are going to create a new element of `tempNewList`:
+In our data create a new element of `tempNewList`:
 
 ```js
 tempNewTodo: [
@@ -639,7 +607,7 @@ tempNewTodo: [
 ],
 ```
 
-We now need a new method so we can add our new todo to a list in `todoLists`
+We need a new method, so we can add our new todo to a list in `todoLists`
 
 ```js
 addNewTodo: function() {
@@ -660,13 +628,13 @@ addNewTodo: function() {
 
 Now let's dive in our HTML.
 
-First, we need to open the sidebar with the **createNewTodo** render.
+We need to open the sidebar with the **createNewTodo** form.
 
 ```html
 <button class="is-add" v-on:click="openSidebar('createNewTodo')">New Todo</button>
 ```
 
-As we did before we are going to bind our inputs using `v-model` and use the `addNewTodo` method to push our new values.
+As we did before, we will bind our inputs using `v-model` and use the `addNewTodo` method to push our new values.
 
 ```html
 <form v-if="sidebarContentToShow === 'createNewTodo'">
@@ -681,9 +649,9 @@ As we did before we are going to bind our inputs using `v-model` and use the `ad
 </form>
 ```
 
-As we are now binding the data for `isCompleted` in our todos, we are going to show, in our navigation the number of completed todos.
+As we are now binding the data for `isCompleted` in our todos, we will show, in our navigation the number of completed todos.
 
-In our **app.js** we are going to create a `totalTodosCompleted` method passing the index of the current todoList.
+In our **app.js**, create a `totalTodosCompleted` method passing the index of the current todoList.
 
 ```js
 totalTodosCompleted: function(i){
@@ -712,9 +680,7 @@ And now in our `navigation`, we are going to use our new method to return the to
 
 #### Edit a todo
 
-Last but not least we want to edit our todo.
-
-First, we need to know the index of the todo we are going to edit, in our data we are going to create `currentTodoIndex`.
+To edit a todo, first, we need to know the index of the todo that will be editing, in our data, create `currentTodoIndex`.
 
 ```js
 currentTodoIndex: 0,
@@ -738,12 +704,12 @@ First, we want to open our slider and change the value of `currentTodoIndex`.
 <button class="is-primary" v-on:click="openSidebar('editTodo'); currentTodoIndex = index">Edit todo</button>
 ```
 
-In our **editTodo** form we want to:
+In our **editTodo** form we will:
 
 - Show our form only if `todoLists[currentListIndex].items.length > 0`
 - Bind the todo name and if completed using `v-model`
-- When we click on _Delete todo_ we trigger the method `deleteTodo`
-- when we click on _Done_ we close our sidebar
+- When we click on _Delete todo_, trigger the method `deleteTodo`
+- When we click on _Done_, close our sidebar
 
 ```html
 <form v-if="sidebarContentToShow === 'editTodo' && todoLists[currentListIndex].items.length > 0">
@@ -758,17 +724,17 @@ In our **editTodo** form we want to:
 </form>
 ```
 
-🎉🎉🎉🎉🎉 The UI of our todo is now done
+🎉🎉🎉🎉🎉 The UI of our todo is now done!
 
 ## LocalStorage
 
-When we reload the page of our application, it goes back to our dummy values. How great would it be if we could store our lists and todos locally?
+When we reload the page, it goes back to our dummy values. How great would it be if we could store our lists and todos locally?
 
 We are going to use [window.localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage). It is part of the [Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API).
 
 **localStorage** allow us to store data with no expiration date.
 
-In our **app.js** we are going to create a new method `updateTodoLocalStorage`
+In our **app.js**, create a new method `updateTodoLocalStorage`
 
 ```js
 //...
@@ -784,7 +750,7 @@ We are using `setItem()` method from the Web Storage API. We pass the following 
   - `keyName`: name of the key we want to create/update (`'todoLocalStorage'`).
   - `keyValue`: value we want to give the key you are creating/updating (`JSON.stringify(this.todoLists)`).
 
-We want now to use this method every time we update the values of our todos or lists. Vue allows us to react to data changes with the `watch` option. Every time we have a change in our `todoLists` we want to call our `updateTodoLocalStorage` method. As our object has nested values, we want to detect changes inside this values. We can pass `deep: true` to do so.
+We want now to use this method every time we update the values of our todos or lists. Vue allows us to react to data changes with the `watch` option. Every time we have a change in our `todoLists`, we will call our `updateTodoLocalStorage` method. As our object has nested values, we want to detect changes inside this values. We can pass `deep: true` to do so.
 
 ```js
 var app = new Vue({
@@ -809,9 +775,9 @@ var app = new Vue({
 });
 ```
 
-Now let's inspect our app and look into **Local Storage**. If we create/update a list or a todo we can see our `todoLocalStorage` storage is updated.
+Now let's inspect our app and look into **Local Storage**. If we create/update a list or a todo we can see our `todoLocalStorage` storage being updated.
 
-Now, when we load our page, we want to set our `todoLists` as our `todoLocalStorage`. Vue comes with a some [Lifecycle Hooks](https://vuejs.org/v2/api/#created). We are going to use the `created: function()` one to set our values. We are going as well to remove our dummy values.
+Now, when we load our page, we need to set our `todoLists` as our `todoLocalStorage`. Vue comes with [Lifecycle Hooks](https://vuejs.org/v2/api/#created). We will use the `created: function()` one to set our values. We are going, as well, to remove our dummy values.
 
 ```js
 var app = new Vue({
@@ -843,7 +809,7 @@ Now if we reload, close and reopen our app all our todos and list have been save
 
 # Bonus - Offline Progressive Web App (PWA)
 
-In this bonus part of this tutorial, we are going to set up a Progressive Web App (PWA) and our services workers so we can use this web application offline on our smartphone.
+In this bonus part of this tutorial, we will set up a Progressive Web App (PWA) and services workers, so we can use this web application offline on a smartphone.
 
 ## Set up a PWA
 
@@ -851,7 +817,7 @@ A PWA is:
 
 > Progressive Web Apps are web applications that are regular web pages or websites, but can appear to the user like traditional applications or native mobile applications. The application type attempts to combine features offered by most modern browsers with the benefits of a mobile experience. _[wikipedia](https://en.wikipedia.org/wiki/Progressive_Web_Apps)_
 
-It is basically a web app that takes advantages of the latest technologies to act and look like a native app.
+It is basically a web app that takes advantages of the latest technologies to act and feels like a native app.
 
 To set up our PWA we will need to create a `manifest.json` file and set up our service workers.
 
@@ -862,7 +828,7 @@ PWA must be served from a secure origin (HTTPS).
 
 ### Generate icon assets
 
-First, we are going to include all the icon assets in our project. The icons have already been generated using https://realfavicongenerator.net/. They are included in `content/img/`.
+First, include all the icon assets in our project. The icons have already been generated using https://realfavicongenerator.net/. They are included in `content/img/`.
 
 In the head of our HTML we want to include:
 
@@ -879,9 +845,9 @@ In the head of our HTML we want to include:
 
 ### Web App Manifest
 
-Web App Manifest (manifest.json) is basically a file that provides information about our web app such as icons, the name of our application, etc. It is part of the technologies used for PWAs. You can get more information about the Web App Manifest on [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/Manifest).
+Web App Manifest (manifest.json) is a file that provides information about our web app such as icons, the name of our application, etc. It is part of the technologies used for PWAs. You can get more information about the Web App Manifest on [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/Manifest).
 
-Now let's create this file at the root of our project.
+Create this file at the root of our project.
 
 ```json
 {
@@ -922,7 +888,7 @@ What are service workers?
 
 > Service workers are a new browser feature that provide event-driven scripts that run independently of web pages. Unlike other workers, service workers can be shut down at the end of events, note the lack of retained references from documents, and they have access to domain-wide events such as network fetches. Service workers also have scriptable caches. Along with the ability to respond to network requests from certain web pages via script, this provides a way for applications to “go offline”. _[w3c/ServiceWorker - Github](https://github.com/w3c/ServiceWorker)_
 
-This tutorial does not aim to go into depth about service workers, you can find some great tutorial and resources online:
+This tutorial does not aim to go in depth about service workers, you can find some great tutorial and resources online:
 
 - [How to Setup a Basic Service Worker (with Caching) - bitsofcode (Video)](https://www.youtube.com/watch?v=BfL3pprhnms)
 - [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/)
@@ -932,13 +898,12 @@ This tutorial does not aim to go into depth about service workers, you can find 
 - [Making a Simple Site Work Offline with ServiceWorker](https://css-tricks.com/serviceworker-for-offline/)
 - [Getting Started with Service Workers](https://www.sitepoint.com/getting-started-with-service-workers/)
 
-https://gist.github.com/Omranic/4e648fa38caab7b8207d3e237fde0c77#create-service-worker
 
-For our services workers we are going to follow this [gist from Omranic](https://gist.github.com/Omranic/4e648fa38caab7b8207d3e237fde0c77#create-service-worker)
+For our services workers we are using this [gist from Omranic](https://gist.github.com/Omranic/4e648fa38caab7b8207d3e237fde0c77#create-service-worker)
 
-First, create a `sw.js` file at the root of our project.
+Create a `sw.js` file at the root of our project.
 
-In our **index.html**
+In our **index.html**:
 
 ```html
 <script>
@@ -950,7 +915,7 @@ In our **index.html**
 </script>
 ```
 
-Then in our **sw.js** we are going to cache all our assets that will allow our app to be usable offline:
+Then, in our **sw.js** we will cache all our assets that will allow our app to be usable offline:
 
 ```js
 var shellCacheName = "pwa-todo-v1";
@@ -964,7 +929,7 @@ var filesToCache = [
 ];
 ```
 
-Then we only have to follow this gist and add the parts **Listen to installation event**, **Update Assets Cache** and **Serve App Shell Offline From Cache**.
+Now, we only have to follow this gist and add the parts **Listen to installation event**, **Update Assets Cache** and **Serve App Shell Offline From Cache**.
 
 ---
 

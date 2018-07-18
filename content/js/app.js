@@ -34,9 +34,6 @@ document.addEventListener(
           deep: true
         }
       },
-      computed: {
-        
-      },
       methods: {
         totalTodosCompleted: function(i){
           var total = 0;
